@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <title>{{ title }}</title>
+    <section id="get_in_touch">
+        <div class="contact_us hero-image-block">
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <h1 style="font-size:80px; text-align:center;">Contact us</h1>
+          <br>
+          <br>
+          <br>
+          <a  href="https://www.instagram.com/olivermccourtyltd/">
+            <img
+              style="position: relative; left:500px;"
+              src="{% static 'images/icons/instagram_colourful.png' %}"
+              alt=""
+              width="100"
+              height="100"
+
+            />
+          </a>
+
+          <a  href="https://www.instagram.com/olivermccourtyltd/">
+            <img
+              style="position: relative; left:850px;"
+              src="{% static 'images/icons/facebook_colourful.png' %}"
+              alt=""
+              width="100"
+              height="100"
+
+            />
+          </a>
+          <a  href="https://www.instagram.com/olivermccourtyltd/">
+            <img
+              style="position: relative; left:1000px;"
+              src="{% static 'images/icons/twitter.png' %}"
+              alt=""
+              width="100"
+              height="100"
+            />
+          </a>
+
+        </a>
+        <a  href="https://www.instagram.com/olivermccourtyltd/">
+          <img
+            style="position: relative; left:400px;"
+            src="{% static 'images/icons/linkedin_colourful.png' %}"
+            alt=""
+            width="100"
+            height="100"
+          />
+        </a>
+
+        </div>
+        <div class="say_hello hero-image-block">
+            <div class="say_hello_content">
+                <div class="say_hello_text text-align-center container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>say hello</h1>
+                        </div>
+                        <div class="col-12">
+                            <p>our team will be in touch</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="say_hello_input container text-align-center">
+                    <div class="row">
+                        <div class="col-md-12 say_hello_input_row_col">
+                            <input class="border-radius-999 input_border_none" type="text" name="User_name" placeholder="your name" size="50"/>
+                        </div>
+                        <div class="col-md-12 say_hello_input_row_col">
+                            <input class="border-radius-999 input_border_none" type="text" name="User_email" placeholder="your email" size="50"/>
+                        </div>
+                        <div class="col-md-12 say_hello_input_row_col">
+                            <input class="border-radius-999 input_border_none" type="tel" name="User_phone_number" placeholder="your phone number" size="50"/>
+                        </div>
+                        <div class="col-md-12 say_hello_input_row_col">
+                            <textarea class="say_hello_input_textarea input_border_none" name="User_message" id="" cols="50" rows="10">your message</textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-dark" type="submit">submit</button>
+                        </div>
+                        <div class="col-md-12">
+                            <h3>thank you for getting in touch</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

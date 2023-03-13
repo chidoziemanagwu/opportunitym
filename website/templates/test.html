@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<h1>template of the html</h1>
+
+{% if messages %}
+<!---->
+{% for message in messages %}
+<h1>{{message}}</h1>
+{% endfor %}
+<!---->
+{% endif %}
+<!---->
+{{form.render}}
+
+<!---->
+{% endblock %}

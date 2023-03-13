@@ -1,0 +1,169 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<title>{{ title }}</title>
+
+<head>
+  {% if messages %}
+  <!--get the error-->
+  {% for msg in messages %}
+  <!--pop up the error message -->
+  <div class="alert alert-danger">
+    <strong>{{ msg.message }}</strong>
+  </div>
+  <!--end for-->
+  {% endfor %}
+  <!--end if-->
+  {% endif %}
+</head>
+
+<section id="your_profile">
+  <div class="begin_form_container">
+    <div class="form-container">
+      
+    
+
+      <div class="bank_details_section">
+        
+
+        <form class="form" method="POST" enctype="multipart/form-data">
+          <input hidden type="text" name="password" />
+
+          {% csrf_token %}
+          <h4>change password</h4>
+          <div class="password_box">
+            <input
+              type="password"
+              id="old_password"
+              name="old_password"
+              placeholder="old password"
+            />
+            <img
+              id="old_password_eye"
+              title="visible"
+              src="/static/images/icons/eye_close.png"
+              onclick="convert(this)"
+            />
+          </div>
+
+          <div class="password_box">
+            <input
+              type="password"
+              id="new_password1"
+              name="new_password"
+              placeholder="new password"
+            />
+            <img
+              id="new_password_eye"
+              title="visible"
+              src="/static/images/icons/eye_close.png"
+              onclick="convert(this)"
+            />
+          </div>
+          <div class="password_box">
+            <input
+              type="password"
+              id="new_password2"
+              name="new_password"
+              placeholder="retype new password"
+              onkeyup="validate()"
+              onchange="validate()"
+            />
+            <img
+              id="new_password_eye"
+              title="visible"
+              src="/static/images/icons/eye_close.png"
+              onclick="convert(this)"
+            />
+          </div>
+          <div style="color: #737079; max-width: 500px; margin: 0 auto">
+            the password contains at lease 8 character, not entirely numerical
+          </div>
+          <div id="password_match_notification">&nbsp</div>
+          <button type="submit" value="submit" id="profile_change_password">
+            change password
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function convert(elem) {
+      let siblings = elem.parentNode.children;
+      if (siblings[0].type == "password") {
+        siblings[0].type = "text"; //convert to text
+        siblings[1].src = "/static/images/icons/eye_open.png"; //convert to eye_open image
+      } else {
+        siblings[0].type = "password"; //convert to password
+        siblings[1].src = "/static/images/icons/eye_close.png"; //convert to eye_close image
+      }
+    }
+
+    function getVideoTime() {
+      let fileVideo = document.getElementById("profile_video_upload");
+      const pickOne = fileVideo.files[0];
+      window.URL = window.URL || window.webkitURL;
+      const url = window.URL.createObjectURL(pickOne);
+      const audioElement = new Audio(url);
+      audioElement.addEventListener("loadedmetadata", (_event) => {
+        const duration = audioElement.duration;
+        if (duration > 120) {
+          alert("Please keep the video length within two minutes " + duration);
+          fileVideo.value = "";
+          return;
+        }
+        const size = pickOne.size / 1024 / 1000;
+        if (size > 300) {
+          alert("The size of the file is too large");
+          fileVideo.value = "";
+          return;
+        }
+      });
+    }
+
+    function validate() {
+      let pw1 = document.getElementById("new_password1").value;
+
+      let pw2 = document.getElementById("new_password2").value;
+
+      let submit = document.getElementById("profile_change_password");
+
+      let notice = document.getElementById("password_match_notification");
+
+      if (pw1 == pw2) {
+        notice.style.color = "green";
+
+        notice.innerHTML = "password matches";
+
+        submit.style.color = "white";
+
+        submit.disabled = false;
+      } else {
+        notice.style.color = "red";
+
+        notice.innerHTML = "password doesn't match";
+
+        submit.style.color = "grey";
+
+        submit.disabled = true;
+      }
+    }
+
+    function checkSelected(element) {
+      let button = document.getElementById("stripe_button");
+      if (element.checked == true) {
+        button.style.color = "white";
+        button.removeAttribute("disabled");
+      } else {
+        button.style.color = "#8f8c95";
+        button.disabled = "disabled";
+      }
+    }
+
+    function detectNum(element) {
+      if (element.value.length == 2) {
+        element.value += "/";
+      }
+    }
+  </script>
+</section>
+{% endblock %}

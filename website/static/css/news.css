@@ -1,0 +1,27 @@
+@import url('../admin/css/fonts.css');
+
+.card {
+    width: auto;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.card-deck{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-gap: .4rem;
+}
+
+.post-title{
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Garet", "Roboto", Arial, Helvetica, sans-serif !important;
+    font-size: 5em;
+    background-color: #DCDCDC;
+}
+
+.post-body{
+    margin-top: 50px;
+}

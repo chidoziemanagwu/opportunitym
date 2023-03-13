@@ -1,0 +1,119 @@
+{% load static %}
+
+
+
+<section id="marketplace_card">
+
+    <div class="market_place">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="button_for_filters text-align-center">
+                        <h6>Filter by Guest Capacity</h6>
+                        <div class="button-group filters-button-group">
+                            <button class="button is-checked" data-filter="*">show all</button>
+                            <button class="button" data-filter="capacity_0_49">0-49</button>
+                            <button class="button" data-filter="capacity_50_99">50-99</button>
+                            <button class="button" data-filter="capacity_100_249">100-249</button>
+                            <button class="button" data-filter="capacity_250_499">250-499</button>
+                            <button class="button" data-filter="capacity_500_999">500-999</button>
+                            <button class="button" data-filter="capacity_over_1000">1000+</button>
+                            
+                        </div>
+
+                        <h6>Filter by Worth (£)</h6>
+
+                        <div class="button-group filters-button-group">
+                            <button class="button is-checked" data-filter="*">show all</button>
+                            <button class="button" data-filter="worth_50_499">50-499</button>
+                            <button class="button" data-filter="worth_500_4999">500-4,999</button>
+                            <button class="button" data-filter="worth_5000_24999">5,000-24,999</button>
+                            <button class="button" data-filter="worth_25000+">25,000+</button>
+                            
+                        </div>
+                    </div>
+
+                    <div class="grid">
+
+                        {% for i in event_details %}
+
+                        
+                        <div class="element-item col-md-4 " data-category="actinoid">
+                            <div class="card ">
+    
+                                <img src="{{i.Image_URL.url}}" class="card-img-top" alt="event_images">
+                                
+                                <div class="card-body">
+                                    <h6 class="data">{{i.date}}</h6>
+                                    <h4 class="card-title">{{i.Speaking_Event_Name}}</h4>
+
+                                    
+                                    <h5 class="location">{{i.Location}}</h5>
+                                    
+                                    <h5>worth (£) </h5>
+                                    <h5 class="worth">{{i.Worth}}</h5>
+
+                                    
+                                    <h5>topic</h5>
+                                    <h5 class="topic">{{i.Topic}}</h5>
+
+                                    
+                                    <h5>guest capacity</h5>
+                                    <h6 class="guest_capacity">{{i.Capacity}}</h6>
+
+                                    
+
+                                    {% if user.is_authenticated %}
+
+                                    <!--<form class="form" method="POST"
+                                        <button class="btn btn-dark" type="submit " value="submit" name="submit">apply</button>
+                                    </form>-->
+                                    <form class="form" method="POST" >
+                                    {% csrf_token %}
+                                    <input hidden type="text" name = "user_id" value="{{user.id}}">
+                                    <input hidden type="text" name = "event_id" value="{{i.id}}">
+                                    <button class="btn btn-dark" type="submit" value="{{i.id}}" name = "submit">apply</button>
+                                    </from>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+
+
+                        <!--<div class="element-item col-md-4 " data-category="actinoid">
+                            <div class="card ">
+                                <img src="{% static 'images/marketplace_simple/marketplace4.png' %}"
+                                    class="card-img-top" alt="Testing">
+                                <div class="card-body">
+                                    <h6 class="data">June 29,2022</h6>
+                                    <h4 class="card-title">IEP Summit</h4>
+
+                                    <hr>
+                                    <h5 class="location">London</h5>
+                                    <br>
+                                    <h5>worth</h5>
+                                    <h5 class="worth">15000</h5>
+
+                                    <br>
+                                    <h5>topic</h5>
+                                    <h5 class="topic">Young entrepreneurs </h5>
+
+                                    <br>
+                                    <h5>guest capacity</h5>
+                                    <h5 class="guest_capacity">500-1000 </h5>
+
+                                    <button class="btn btn-dark">apply</button>
+                                </div>
+
+                            </div>
+                        </div>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</section>

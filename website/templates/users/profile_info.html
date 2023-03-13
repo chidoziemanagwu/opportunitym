@@ -1,0 +1,140 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<title>{{ title }}</title>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+</ul>
+
+{% else %}
+
+<head>
+    <script>
+        function requestFullScreen(element) {
+            let userAgent = navigator.userAgent;
+            if (userAgent.indexOf("Firefox") > -1) {
+                alert('your browser not supports open this video, please right click to see the full video');
+            } else {
+                element.setAttribute("autoplay", "autoplay");
+                element.style.borderRadius = "0px";
+                element.requestFullscreen();
+            }
+        }
+    </script>
+    {% if messages %}
+    <script>
+        {%
+            for msg in messages %}
+        alert('{{ msg.message }}');
+        {%
+            endfor %
+        }
+    </script>
+    {% endif %}
+</head>
+
+<section id="profile_info">
+
+    <div class="container text-center" style="margin-top: 5em">
+        <div class="row">
+            <div class="col-md-4 p-10">
+                <div class="LHS_div">
+                    <div class="row">
+                        <div class="col p-5" style="background-color: #222222; color: #fefefe">
+                            <img
+                                    class="applicants_headshot"
+                                    style="object-fit: cover; border-style: solid; border-color: white"
+                                    id="picture"
+                                    {% if profile.profile_pic_URL %}
+                                    src="{{ profile.profile_pic_URL.url }}"
+                                    {% else %}
+                                    src="{% static 'images/placeholder.jpeg' %}"
+                                    {% endif %}
+
+                            />
+                            <h3 class="mt-3">{{ user.first_name }} {{ user.last_name }}</h3>
+                            <h6>{{ profile.Company }}</h6>
+                            <div class="mb-5">
+                                <a href={% url 'Your_profile' user.username %}>
+                                    <button class="btn btn-primary m-3">Edit profile</button>
+                                </a>
+                                <h5 class="mt-4 text-white">Stripe account: </h5>
+                                {% if stripe_ac_link == '' %}
+                                <a href={{stripe_link}}>
+                                    <button class="btn btn-primary" name = "strip_button" >go to stripe account</button>
+                                </a> 
+                                
+                                {% else %}
+    
+                                <a href={{stripe_ac_link}}>
+                                    <button class="btn btn-primary" name = "strip_button">go to stripe account</button>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 mt-5">
+                <div class="row">
+                    <div class="col-sm-6 mb-5">
+                        <div class="col"><h5>Name</h5>{{ user.first_name }} {{ user.last_name }}</div>
+                    </div>
+                    <div class="col-sm-6 mb-5">
+                        <div class="col"><h5>Job title</h5>{{ profile.Job_title }}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-5">
+                        <div class="col"><h5>Company</h5>{{ profile.Company }}</div>
+                    </div>
+                    <div class="col-sm-6 mb-5">
+                        <div class="col"><h5>Phone number</h5>{{ profile.Phone_number }}</div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-8 mb-5">
+                        <div class="col" style="word-break: break-all; min-height: 200px"><h5>Bio</h5>
+                            {{ profile.bio }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    {% if profile.bio_video_URL %}
+                    <div class="col-md-8 mb-5">
+                        <div class="col"><h5>Video bio</h5>
+                            <video
+                                    class="applicants_video"
+                                    id="video"
+                                    src="{{ profile.bio_video_URL.url }}"
+                                    style="max-width: 300px;max-height: 300px;cursor: pointer;"
+                                    onclick="requestFullScreen(this)"
+                                    muted
+                            ></video>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+
+function popup(){
+    //alert("you haven't register with stripe account , now we will rediect you to register page")
+}
+
+
+
+</script>
+
+
+
+{% endif %}
+{% endblock %}

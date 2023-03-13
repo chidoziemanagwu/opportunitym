@@ -1,0 +1,159 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<section id="marketplace_data_input_page">
+  <div class="form-container">
+    <h2>begin</h2>
+    <h3>only takes 60 secs</h3>
+    <form class="form" method="POST" enctype="multipart/form-data">
+      {% csrf_token %} 
+      <!--{{form}}-->
+
+      <tr>
+        <th><label for="id_Creator">Creator:</label></th>
+        <td>
+          <select name="Creator" required id="id_Creator">
+            <option value="">---------</option>
+
+            <option value="1">admin</option>
+
+            <option value="2">test1</option>
+
+            <option value="3" selected>test2</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Image_URL">Image URL:</label></th>
+        <td>
+          <input
+            type="file"
+            name="Image_URL"
+            accept="image/*"
+            id="id_Image_URL"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="id_Speaking_Event_Name">Speaking Event Name:</label>
+        </th>
+        <td>
+          <input
+            type="text"
+            name="Speaking_Event_Name"
+            value="TE3 "
+            maxlength="100"
+            required
+            id="id_Speaking_Event_Name"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Type">Type:</label></th>
+        <td>
+          <input
+            type="text"
+            name="Type"
+            value="ajsk fj;aksdj ;"
+            maxlength="100"
+            required
+            id="id_Type"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Location">Location:</label></th>
+        <td>
+          <input
+            type="text"
+            name="Location"
+            value="jjsdlgfkjsd ;lfgkj"
+            maxlength="500"
+            required
+            id="id_Location"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Capacity">Capacity:</label></th>
+        <td>
+          <input
+            type="number"
+            name="Capacity"
+            value="10"
+            min="0"
+            required
+            id="id_Capacity"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Topic">Topic:</label></th>
+        <td>
+          <input
+            type="text"
+            name="Topic"
+            value="jlkjs;lk fjl;kajdf;kadj;lk"
+            maxlength="100"
+            required
+            id="id_Topic"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Worth">Worth:</label></th>
+        <td>
+          <input
+            type="number"
+            name="Worth"
+            value="10"
+            min="0"
+            required
+            id="id_Worth"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_date">Date:</label></th>
+        <td>
+          <input
+            type="text"
+            name="date"
+            value="2022-07-06 09:31:54"
+            required
+            id="id_date"
+          /><input
+            type="hidden"
+            name="initial-date"
+            value="2022-07-06 09:31:54"
+            id="initial-id_date"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_Description">Description:</label></th>
+        <td>
+          <input
+            type="text"
+            name="Description"
+            value="k;ladfj l;akjf;akdjf;akdjf;lakdfjl;adfjk ;kadf;asdf asdf "
+            maxlength="5000"
+            required
+            id="id_Description"
+          />
+        </td>
+      </tr>
+
+      <button
+        type="button submit "
+        value="submit"
+        class="btn btn-primary btn-lg"
+      >
+        submit
+      </button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

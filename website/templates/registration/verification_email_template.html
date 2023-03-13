@@ -1,0 +1,47 @@
+{% load static %}
+<div style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:17px;">
+    <div class="my-container">
+        <div style="width:100%; text-align:right;">
+            <img src="https://opportunitym.com/static/images/logoforemail.png" style="max-width: 50px; width:100%;" />
+
+        </div>
+        <div style="background-color:#ea0040;border-radius:15px">
+
+            <h1 class="format-font" style="text-align:left;padding:2px;color:white">
+                account activation
+            </h1>
+        </div>
+
+        <!--<h2 class="format-font" style="text-align:left">E-mail Confirmation</h2> <hr style="text-align:left; background-color:#ea0040;width:100px">-->
+
+        <div class="format-font" style="margin-top:20px;line-height:1.5">
+            <p style="text-align:left;font-weight:bold">hey {{user.first_name |default:'dear'}},</p>
+            a huge congratulations on creating your opportunityM account! <br> <br>
+            boosting security for your account, there is simply 1 more step to authorise your email address: <br><br>
+            - please click on the link below to confirm the email to activate your account 😁      
+        </div>
+
+            <!--<hr style="background-color:#ea0040;width:50px">-->
+            <div class="format-font " style="text-align:left; margin-top:30px;" >
+                <a href="{{link}}" style="background-color:#ea0040; padding:10px; color:white; border-radius:20px; font-size:1.5em; text-decoration:none;" >activate account</a>
+            </div>
+            <p class="format-font" style="text-align:left;margin-top:25px; line-height:1.5">
+        (thrilled to hear your thoughts on our website!)<br><br>
+            message us on develop@opportunitym.com with ideas and improvements you would like to see so we can grow even more opportunities alongside you 🤗<br><br>
+            have an incredible day ahead in the meantime
+            </p>
+
+        <p class="format-font" style="margin-top:50px">
+        kind regards<br>
+            team opportunityM
+            
+        </p>
+
+        <!--<p class="format-font" style="line-height:1.5">
+            <b>Thanks for joining opportunityM <br> This mail machine generated. <br>Do not reply to this mail </b>
+        </p> -->
+        <div class="yj6qo"></div>
+        <div class="adL"></div>
+    </div>
+
+</div>

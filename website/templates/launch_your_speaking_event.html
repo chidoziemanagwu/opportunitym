@@ -1,0 +1,404 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+
+{% if isOrganiser == True %}
+<title>{{title}}</title>
+  {% else %}
+  <title>for speakers</title>
+{% endif %}
+
+<style> /* REMOVE UP AND DOWN BUTTON FROM INPUT NUMBER */
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
+<section id="launch_your_speaking_event" style="margin-top: -60px">
+  <!-- 1st section-->
+
+  <div
+    class="launch_your_speaking_event_img_section text-align-center hero_image_background"
+  >
+  {% csrf_token %} {% if errors %}
+  <!---->
+  {% for errors in errors %}
+  <div class="alert alert-danger" role="alert">{{errors}} error</div>
+  {% endfor %}
+  {% endif %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text_box">
+            <h2>launch your speaking event</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-align-center pt-5">
+    <h2>Create your event now!</h2>
+    <p>It only takes 60 seconds</p>
+  </div>
+
+  {% if user.is_authenticated %}
+
+  <!--2nd secion-->
+  <div class="begin_form_container">
+    <section id="marketplace_data_input_page">
+      <div class="form-container">
+        <form class="form" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!--{{form}}-->
+
+          <tr>
+            <th><label hidden for="id_Creator">Creator:</label></th>
+            <td>
+              <select hidden name="Creator" required id="id_Creator">
+                {% for user_name in users_list %}
+                <!--<option value="1">admin</option>-->
+                {% if user_name.username == user.username %}
+                <option value="{{user_name.id}}" selected>{{user_name}}</option>
+                {% endif %}
+                <!--<option value="1">admin</option>-->
+                {% endfor %}
+                <!--<option value="1">admin</option>-->
+
+                <!--<option value="2">test1</option>-->
+
+                <!--<option value="3" selected>test2</option>-->
+              </select>
+            </td>
+          </tr>
+          <tr>
+          <th><label for="id_Image_URL">Image:<br>(must be 2880 x 1440 px and less than 2 MB)</label>
+          
+
+            {% if errors %}
+              <label style="color:red; font-weight:bold;">Please upload the image again</label>
+            {% endif %}
+            </th>
+            <td>
+              <input
+                type="file"
+                name="Image_URL"
+                accept="image/*"
+                id="id_Image_URL"
+                onchange="checkImageSize(this)"
+                {% if errors %}
+                style="border-color:red;"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label for="id_Speaking_Event_Name">Speaking Event Name: </label>
+            </th>
+            <td>
+              <input
+                type="text"
+                name="Speaking_Event_Name"
+                maxlength="100"
+                required
+                id="id_Speaking_Event_Name"
+                
+                
+                {% if errors %}
+                value="{{ form.Speaking_Event_Name }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Type">Type:</label></th>
+            <td>
+              <select name="Type" id="id_Type">
+
+                <!-- error return check to keep data -->
+                {% if form.Type == 'Virtual' %}
+                  <option value="Virtual" selected>Virtual</option>
+                {% elif form.Type == 'Physical' %}
+                <option value="Physical">Physical</option>
+                {% else %}
+                
+                <option value="Virtual" selected>Virtual</option>
+                <option value="Physical">Physical</option>
+
+                {% endif %}
+                <!---                                  -->
+                      
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Location">Location:</label></th>
+            <td>
+              <input
+                type="text"
+                name="Location"
+                maxlength="500"
+                required
+                id="id_Location"
+
+                {% if errors %}
+                value="{{ form.Location }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Capacity">Capacity :</label></th>
+            <td>
+              <input
+                type="number"
+                name="Capacity"
+                placeholder="100"
+                min="0"
+                required
+                id="id_Capacity"
+
+                {% if errors %}
+                value="{{ form.Capacity }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Topic">Topic:</label></th>
+            <td>
+              <select name="Topic" required id="id_Topic">
+                <option value="Not listed topic" {% if form.Topic == '' %}selected{% endif %}>Choose one topic </option>
+
+                <!-- Loop for the topics-->
+                {% for topic in topics_list %}                
+                <option value="{{topic.topic}}" {% if form.Topic == topic.topic %}selected{% endif %}>{{topic.topic}}</option>
+                <!--Registering topic with name, not by topic id, it can be modified later-->
+                {% endfor %}           
+                <!-- end loop -->
+              </select>
+            </td>
+          </tr>
+          <tr>
+
+            <th><label for="id_Worth"> Worth (£):</label></th>
+            <td>
+              <input
+                type="number"
+                name="Worth"
+                placeholder="10"
+                min="0"
+                required
+                id="id_Worth"
+
+                {% if errors %}
+                value="{{ form.Worth }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_date">Date:</label></th>
+            <td>
+              <input
+                style="background-color:#D3D3D3;"
+                type="date"
+                name="date"
+                placeholder="YYYY-MM-DD hh:mm:ss"
+                required
+                id="id_date"
+                onchange="isFutureDate(this.value)"
+                {% if errors %}
+                  style="border-color:red;"
+                {% endif %}
+              /><input type="hidden" name="initial-date" id="initial-id_date" />
+              <p id="id_dateMessage" style="color: red"></p>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_time">Time:</label></th>
+            <td>
+              <input
+                style="background-color:#D3D3D3;"
+                type="time"
+                name="time"
+
+                required
+                id="id_time"
+                onchange="timePassed(this.value)"
+              /><input type="hidden" name="initial-date" id="initial-id_date" />
+              <p id="id_timeMessage" style="color: red"></p>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Description">Description:</label></th>
+            <td>
+              <textarea
+                rows="8"
+                name="Description"
+                maxlength="5000"
+                placeholder="Enter description (max 5000 words)"
+                required
+                id="id_Description"
+
+                {% if errors %}
+                value="{{ form.Description }}"
+                {% endif %}
+              ></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <th><label hidden for="id_Status">Status:</label></th>
+            <td>
+              <select hidden name="Status" id="id_Status">
+                
+                {% if form.Status == 'Open' %}
+                  <option value="Open" selected>Open</option>
+                {% elif form.Status == 'Completed' %}
+                  <option value="Completed" selected>Completed</option>
+                {% elif form.Status == 'Archived' %}                
+                  <option value="Archived">Archived</option>
+                {% else %}
+                  <option value="Open" selected>Open</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Archived">Archived</option>
+                {% endif %}
+              </select>
+            </td>
+          </tr>
+
+          <button
+            type="button submit "
+            name="Create_Event"
+            class="btn btn-primary btn-lg"
+          >
+            submit
+          </button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  {% else %}
+
+  {% endif %}
+  <!--3rd secion-->
+  <!--<h1 class="text-align-center">Card in here</h1>-->
+  <!---->
+  {% include "events_card.html" %}
+  <!--card-->
+
+  <!--4th secion archived_speaking_events -->
+
+  <!-- <div class="get_verified text-align-center hero_image_background">
+    <div class="get_verified_content">
+      <div class="get_verified_box_text">
+        <h1>get verified</h1>
+        <p>use the space below to express interest in becoming verified</p>
+      </div>
+
+      <div class="get_verified_box_input">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 get_verified_box_input_detail">
+              <input
+                class="border-radius-999"
+                type="email"
+                name="verified_email"
+                placeholder="your email"
+                size="50"
+              />
+            </div>
+            <div class="col-12 get_verified_box_input_detail">
+              <button class="btn btn-dark border-radius-999" type="submit">
+                submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <script>
+    const dateMessage = document.getElementById("id_dateMessage");
+    const timeMessage = document.getElementById("id_timeMessage");
+    var today = new Date();
+    var checkDate;
+    var hours;
+    var mins;
+
+    function checkImageSize(element) {
+      let file = element.files[0];
+      console.log(file.size / 1000000);
+      if (file.size / 1000000 > 2) {
+          alert("Image file size is too big");
+          element.value = "";
+          return;
+      }
+      let image = new Image();
+      image.onload = function () {
+        URL.revokeObjectURL(this.src);
+        console.log(this.width, this.height);
+        if (this.width > 2880 || this.height > 1440) {
+          alert("Image dimensions is too big");
+          element.value = "";
+        }
+      };
+      image.src = URL.createObjectURL(file);
+    }
+
+    //Check date restraints
+    function checkValidDate(date1, date2){
+      if(checkDate >= today){
+        dateMessage.innerHTML = "";
+      }
+      else{
+        dateMessage.innerHTML = "Cannot select past date or time. Please select a future date or time.";
+      }
+    }
+
+    function isFutureDate(date) {
+      checkDate = new Date(date);
+      if(!hours && !mins){
+        checkDate.setHours(23, 59, 59);
+        checkValidDate(today, checkDate);
+        timeMessage.innerHTML = "Please select a time";
+      }
+      else{
+        checkDate.setHours(hours, mins, 0);
+        checkValidDate(today, checkDate);
+      }
+    }
+
+    function timePassed(time) {
+      var splitTime = time.split(":");
+      hours = splitTime[0];
+      mins = splitTime[1];
+
+      if(!checkDate){
+        console.log("please select a date");
+        checkDate = new Date();
+        checkDate.setHours(hours, mins, 0);
+        console.log(checkDate);
+        console.log(today);
+        dateMessage.innerHTML = "Please select a date";
+      }
+      else{
+        checkDate.setHours(hours, mins, 0);
+        console.log(checkDate);
+        console.log(today);
+        checkValidDate(today, checkDate);
+        timeMessage.innerHTML = "";
+      }
+    }
+  </script>
+</section>
+{% endblock %}

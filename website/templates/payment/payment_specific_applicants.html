@@ -1,0 +1,146 @@
+{% block content %}{% load static %}
+<!---->
+
+<!---->
+{% comment %} {{dictionary_event}} {% endcomment %}
+<!---->
+
+<section id="specific_applicants">
+  <div class="container pb-5">
+    {% for key, value in dictionary_event.items %}
+    <h1 class="p-4">{{key}}</h1>
+    <div class="container text-align-center px-5">
+      <h3>Your applicants</h3>
+    </div>
+    {% if value|length == 0 %}
+    <p class="mt-5">You have no applicants for this event</p>
+    {% else %}
+    <div class="row">
+      {% for user in value %}
+      <!---->
+      {% for i in users_profile %}
+      <!---->
+      {% if user.id == i.user_id %}
+
+      <div class="col-md-4">
+        <div class="specific_applicant">
+          <img
+            src="/static/images/icons/seach_look_search_see_icon.png"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop{{ user.id }}"
+            style="
+              cursor: pointer;
+              width: 20px;
+              height: 20px;
+              margin-left: 210px;
+            "
+          />
+          <div
+            class="video_area"
+            style="object-fit: cover; height: 170px; width: 170px"
+            onmouseover="videoPlayback(this)"
+            onmouseout="videoStopped(this)"
+          >
+
+            <img
+              class="applicants_headshot"
+              id="picture"
+              style="object-fit: cover; height: 170px; width: 170px"
+              {% if i.profile_pic_URL%}
+              src="{{ i.profile_pic_URL.url }}"
+              {% else %}
+              src="{% static 'images/placeholder.jpeg' %}"
+              {% endif %}
+            />
+            {% if i.bio_video_URL %}
+            <video
+              class="applicants_video"
+              id="video"
+              style="object-fit: cover; height: 170px; width: 170px"
+              src="{{ i.bio_video_URL.url }}"
+              onclick="requestFullScreen(this)"
+              muted
+            ></video>
+            {% endif %}
+          </div>
+          <h4 class="applicants_header">
+            {{ user.first_name }} {{ user.last_name }}
+          </h4>
+          <h6 class="applicant_single_line_text">{{ i.Job_title }}</h6>
+          <h7 class="applicant_single_line_text">{{ i.Company }}</h7>
+          
+
+          <form action="" method="post">
+            {% csrf_token %}
+            <input hidden type="text" name="userID" value="{{user.id}}" />
+            <input hidden type="text" name="event_name" value="{{key}}" />
+            <button type="submit" class="button-group" value="{{user.id}}">
+              I choose you
+            </button>
+          </form>
+
+
+        </div>
+      </div>
+
+      <!--old-------------------------------------------------------------------->
+  
+      {% endif %}
+      <!---->
+      {% endfor %}
+      <!---->
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <section>
+    <script>
+      function loadMore() {
+        let applicants = document.getElementById("all_applicants");
+        let see_more_button = document.getElementById("applicants_see_more");
+        if (applicants.style.height != "auto") {
+          applicants.style.overflow = "visible";
+          applicants.style.height = "auto";
+          see_more_button.innerText = "see less";
+        } else {
+          applicants.style.overflow = "hidden";
+          applicants.style.height = "950px";
+          see_more_button.innerText = "see more";
+        }
+      }
+
+      function videoPlayback(video) {
+        let children = video.children;
+        children[0].style.display = "none";
+        children[1].style.display = "inline";
+        children[1].style.borderRadius = "150px";
+        children[1].setAttribute("autoplay", "autoplay");
+        children[1].setAttribute("loop", "loop");
+        children[1].play();
+      }
+
+      function videoStopped(video) {
+        let children = video.children;
+        children[0].style.display = "inline";
+        children[1].style.display = "none";
+        children[1].pause();
+      }
+
+      function requestFullScreen(element) {
+        let userAgent = navigator.userAgent;
+        if (userAgent.indexOf("Firefox") > -1) {
+          alert(
+            "your browser not support open this video, please right click to see the full video"
+          );
+        } else {
+          element.setAttribute("autoplay", "autoplay");
+          element.style.borderRadius = "0px";
+          element.requestFullscreen();
+        }
+      }
+    </script>
+  </section>
+  {% endblock %}
+</section>

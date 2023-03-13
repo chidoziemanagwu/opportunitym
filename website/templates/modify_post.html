@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<div class="container">
+    {% csrf_token %}
+    {% if post_slug == 'new_post'%}
+    <h1 class="display-4 mt-3">Create Your Post</h1>
+    {% else %}
+    <h1 class="display-4 mt-3">Edit Your Post</h1>
+    {% endif %}
+    <a href="{% url 'my_post' %}">
+        <button class="btn my-3"><i class="bi bi-arrow-left"></i> Back to posts</button>
+    </a>
+    <form method="POST">
+        {{ form.media }}
+        <h4>{{ form.as_p }}</h4>
+        <button class="btn btn-primary mb-4">Submit</button>
+    </form>
+
+</div>
+{% endblock %}

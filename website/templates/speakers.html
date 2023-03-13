@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<section id="speakers_page" style="margin-top: -60px">
+  <div class="your_speaking_events_container_img hero_image_background"></div>
+
+  <div class="container text-align-center pt-5">
+    <h2>Here are your events</h2>
+    <p>Interested in an event? why not apply to one?</p>
+  </div>
+
+  {% include "events_card.html" %}
+</section>
+
+{% endblock %}

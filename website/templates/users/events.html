@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <title>{{ title }}</title>
+    <section id="events">
+        <div class="container text-align-center">
+            <h2>
+                <b>your events</b>
+            </h2>
+            <div class="row">
+                <div class="col">
+                    <label>
+                        <input type="text" class="search" placeholder="search">
+                    </label>
+                    <label>
+                        <select name="status" class="filter-dropdown">
+                            <option value="title" selected disabled>filter by status</option>
+                            <option value="any">show all</option>
+                            <option value="active">active</option>
+                            <option value="completed">completed</option>
+                            <option value="archived">archived</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select name="worth" class="filter-dropdown">
+                            <option value="title" selected disabled>filter by worth (£)</option>
+                            <option value="any">show all</option>
+                            <option value="0 - 49">0 - 49</option>
+                            <option value="50 - 499">50 - 499</option>
+                            <option value="500 - 4999">500 - 4,999</option>
+                            <option value="5000 - 24999">5009 - 24,999</option>
+                            <option value="25000 +">25,000 +</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select name="capacity" class="filter-dropdown">
+                            <option value="title" selected disabled>filter by guest capacity</option>
+                            <option value="any">show all</option>
+                            <option value="0 - 49">0 - 49</option>
+                            <option value="50 - 99">50 - 99</option>
+                            <option value="100 - 249">100 - 249</option>
+                            <option value="250 - 499">259 - 499</option>
+                            <option value="500 - 999">500 - 999</option>
+                            <option value="1000 +">1,000 +</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-wrap">
+                        {% for event in events %}
+                            <div class="grid-element">
+                                <div class="card">
+                                    <div class="card-image" style="background-image: url({{ event.Image_URL.url }})"></div>
+                                    <div class="card-body">
+                                        <h6 class="card-date">{{ event.date }}</h6>
+                                        <h4 class="card-title">{{ event.Speaking_Event_Name }}</h4>
+                                        <div class="card-divider"></div>
+                                        <div class="location">{{ event.Location }}</div>
+                                        <div class="card-section">
+                                            <p class="card-subtitle">worth (£)</p>
+                                            <span class="card-info worth">{{ event.Worth }}</span>
+                                        </div>
+                                        <div class="card-section">
+                                            <p class="card-subtitle">topic</p>
+                                            <span class="card-info topic">{{ event.Topic }}</span>
+                                        </div>
+                                        <div class="card-section">
+                                            <p class="card-subtitle">guest capacity</p>
+                                            <span class="card-info capacity">{{ event.Capacity }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

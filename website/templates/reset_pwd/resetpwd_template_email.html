@@ -1,0 +1,35 @@
+{% block content %}
+<div style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:17px;">
+
+<div class="my-container">
+    <div style="width:100%; text-align:right;">
+        <img src="https://opportunitym.com/static/images/logoforemail.png" style="max-width: 50px; width:100%;" />
+
+    </div>
+    <div style="background-color:#ea0040;border-radius:15px">
+        <h1 class="format-font" style="text-align:left;padding:2px;color:white">
+            reset password
+        </h1>
+    </div>
+
+    <div class="format-font" style="margin-top:20px;line-height:1.5">
+        ‘soooo many passwooooords’ <br> <br>
+        it’s okay, we’ve got your back 🤗<br><br>
+        simply click below to reset your password 😇      
+    </div>
+
+    <div class="format-font " style="text-align:left; margin-top:30px;" >
+        <a href="{{ protocol}}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}" style="background-color:#ea0040; padding:10px; color:white; border-radius:20px; font-size:1.5em; text-decoration:none;" >reset password</a>
+    </div>
+    
+    
+    </div>
+    <p class="format-font" style="margin-top:50px">
+        kind regards<br>
+         team opportunityM
+         
+     </p><div class="yj6qo"></div><div class="adL"></div>
+</div>
+</div>
+
+{% endblock %}

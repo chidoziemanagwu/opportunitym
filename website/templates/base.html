@@ -1,0 +1,525 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!--favicon------------------------------------------------------------------------------------------------>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'images/icons/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'images/icons/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- end favicon--------------------------------------------------------------------------------------------->
+
+    {% comment %} bootstrap css {% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!--font-awesome----------------------------------------------------------------------------------------------->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+    <!--bootstrap-social------------------------------------------------------------------------------------------->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" integrity="sha512-f8mUMCRNrJxPBDzPJx3n+Y5TC5xp6SmStstEfgsDXZJTcxBakoB5hvPLhAfJKa9rCvH+n3xpJ2vQByxLk4WP2g==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css" />
+
+    <!--Jquery------------------------------------------------------------------------------------------------------>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- scroll reveal ------------------------------------------------------------------------------->
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- customer css -------------------------------------------------------------------------------->
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- customer cookie popup css -------------------------------------------------------------------------------->
+
+    <style>
+        .cookiePopup {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: #0a0a0a;
+            color: white;
+            padding: 50px 32px;
+            box-shadow: 0 -2px 16px #16164a1f;
+            transition: 400ms;
+        }
+        
+        .cookiePopup.active {
+            bottom: 0;
+        }
+        
+        .cookiePopup a {
+            color: rgb(37, 78, 212);
+        }
+        
+        .acceptCookie {
+            background: #ea0040;
+            border: 0;
+            color: white;
+            padding: 12px 48px;
+            font-size: 18px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            float: right;
+        }
+        
+        .rejectCookie {
+            background: white;
+            border: 0;
+            color: rgb(60, 59, 59);
+            padding: 12px 48px;
+            font-size: 18px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            float: right;
+            margin-right: 24px;
+        }
+    </style>
+
+    <!--Cookies Solution------------------------------------------------------------------------------->
+
+    <!----Nav Bar----------------------------------------------------------------------------------------->
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'>
+    <link href='//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet' />
+
+</head>
+</head>
+
+<body>
+    <header id="header">
+
+        <nav class="navbar navbar-expand-xxl navbar-dark fixed-top bg-black">
+            <!-- navbar-expand-xl -->
+            <div class="container-fluid" ; style="padding-right: 30px">
+                <a class="navbar-brand" href="/">
+                    <!-- Logo for larger screens-->
+                    <img src="{% static 'images/logo-opportunitym.png' %}" alt="" height="50" class="d-none d-md-block align-text-top" style="margin-left: 30px; padding-top: 1.2%;" />
+                    <!-- Logo for smaller screens-->
+                    <img src="{% static 'images/Logo_Colour.png' %}" alt="" width="50" height="50" class="d-md-none align-text-top" style="margin-left: 35px; padding-top: 3%;" />
+                </a>
+
+                <!-- <div class="pos-f-t"> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-right: 24px;">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+
+                        <li class="nav-item">
+                        <a class="nav-link"; href="{% url 'index' %}" style="font-size: 14px">Home</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-center" href="{% url 'about' %}" style="font-size: 14px">About us</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-center" href="{% url 'opportunity_board' %}" style="font-size: 14px">Opportunity Board</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-center" href="{% url 'new' %}" style="font-size: 14px">What's new</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-center" href="{% url 'coming_soon' %}" style="font-size: 14px">Coming soon</a>
+                                </li>
+
+                                {% comment %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 14px">Speakers M</a>
+                                    <ul class="dropdown-menu bg-black" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-center" href="{% url 'speakers' %}" style="font-size: 14px">For speakers</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-center" href="{% url 'launch_your_speaking_event' %}" style="font-size: 14px">For organisers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 14px">Careers M</a>
+                                    <ul class="dropdown-menu bg-black" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-center" href="{% url 'find_jobs' %}" style="font-size: 14px">Job seekers</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-center" href="{% url 'create_jobs' %}" style="font-size: 14px">
+                                                Job posters
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                {% endcomment %}
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'news' %}" style="font-size: 14px">News</a>
+                                </li>
+
+                                <!-- {% if number_of_post != 0 %}
+                                <li class="nav-item" hidden="true">
+                                    <a class="nav-link" href="{% url 'news' %}">NEWS</a>
+                                </li> -->
+                                {% else %} {% endif %}
+                                <!--<li class="nav-item">
+                                    <a class="nav-link" href="#">coming soon</a>
+                                </li> -->
+
+                                {% if user.is_authenticated %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 14px">Hello, {{user.first_name |default:''}} {{user.last_name |default:'Guest'}}!
+                                        <!--<img src="{% static 'images/logo.png' %}" alt="">-->
+                                    </a>
+                                    <ul class="dropdown-menu bg-black" aria-labelledby="navbarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'Your_profile' user.username %}" style="font-size: 14px">Update your profile</a>
+                                        </li>
+
+                                        <!-- Speakers M section -->
+
+                                        <li><hr class="dropdown-divider"></li>
+
+                                        <li><h6 class="dropdown-header">Speakers M</h6></li>
+
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'speakers' %}" style="font-size: 14px">For speakers</a>
+                                        </li>
+                                            
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'launch_your_speaking_event' %}" style="font-size: 14px">For organisers</a>
+                                        </li>
+
+                                        <!-- Careers M section -->
+
+                                        <li><hr class="dropdown-divider"></li>
+
+                                        <li><h6 class="dropdown-header">Careers M</h6></li>
+
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'find_jobs' %}" style="font-size: 14px">Job seekers</a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'create_jobs' %}" style="font-size: 14px">Job posters</a>
+                                        </li>
+
+                                        <li><hr class="dropdown-divider"></li>
+
+                                        {% comment %}
+                                        <li>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{% url 'profile_info' user.username %}"
+                                                style="font-size: 14px"
+                                                >Profile Information</a>
+                                        </li>
+                                        {% endcomment %}
+                                        {% if user.is_superuser%}
+                                        <li>
+                                            <a
+                                            class="dropdown-item"
+                                            href="{% url 'modify_post' post_slug='new_post' %}"
+                                            style="font-size: 14px"
+                                            >Create a Post</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'my_post' %}" style="font-size: 14px"
+                                            >My post</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/secretAdminPage" style="font-size: 14px">Admin</a>
+                                        </li>
+                                        {% endif %} {% comment %}
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'settings' %}" style="font-size: 14px">Settings</a>
+                                        </li>
+                                        {% endcomment %}
+                                        <li>
+                                            <a class="dropdown-item text-light" href="{% url 'logout' %}" style="font-size: 14px"
+                                            >Logout</a>
+                                        </li>
+                    <!--<li><a class="dropdown-item" href="#">Another action</a></li>-->
+                                    </ul>
+                                </li>
+                        </li>
+
+                        {% else %}
+                        <li class="nav-item d-flex justify-content-between">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="{% url 'user_login_page' %}" style="font-size: 14px">Log in</a>
+                            </li>
+                            <button class="btn" type="button" style="background-color: #ea0040">
+                                <a href="{% url 'register' %}" 
+                                    style="text-decoration: none; font-size: 14px; font-style: normal; padding: 2px 10px; color:white">
+                                    Register
+                                </a>
+                            </button>
+                        </li>
+
+                        <!--<li class="nav-item">
+                <button class="btn btn-lg btn-danger border-radius-999">
+                <a href="{% url 'user_login_page' %}"
+                style="text-decoration: none; font-size: 15px; font-style: normal; padding: 2px 10px;"
+                >
+                    LOG IN
+                </a>
+                </button>
+                </li>-->
+
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- </div> -->
+            </div>
+        </nav>
+    </header>
+
+    <div class="min-vh-100" style="padding-top: 70px;">
+        {%block content %} {% endblock %}
+    </div>
+
+</body>
+
+
+<!-- Footer------------------------------------------------------------------------------------------------- -->
+
+<div class="container-fluid" ; style="padding-left: 60px; padding-right: 60px; background-color: black;" ;>
+    <footer class="py-5" ; style="background-color: black;">
+        <div class="row">
+            <div class="col-6 col-md-2 mb-3">
+                <h6 style="color: white;">NAVIGATE</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'about' %}">About Us</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'new' %}">What's New</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'coming_soon' %}">Coming Soon</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'speakers' %}">For Speakers</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'launch_your_speaking_event' %}">For Organisers</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-md-2 mb-3">
+                <h6 style="color: white;">COMPANY</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'cookies' %}">Cookies</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link p-0 text-muted" href="{% url 'contact_us' %}">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-7 offset-md-1 mb-3">
+                <h6 style="color: white;">SUBSCRIBE</h6>
+                <p style="color: #6C757D">Stay up to date with our monthly news updates</p>
+                <p style="color: #6C757D"><small id="success1"></small></p>
+                <form id="subscribe_to_newsletter_form" class="d-flex flex-column flex-sm-row w-80 gap-2 mb-3" method="POST">
+                    {% csrf_token %}
+                    <label for="newsletter" class="visually-hidden">Email address</label>
+                    <input id="newsletter" type="email" name="newsletter" class="form-control" placeholder="Email address">
+                    <input id="newsletter_firstname" type="hidden" name="newsletter_firstname" 
+                        {% if user.is_authenticated %}    
+                        value=" {{ user.first_name }}" 
+                        {% else %}
+                        value=""
+                        {% endif %}
+                    />
+                    <!-- <button class="btn btn-danger" style="background-color: #ea0040" type="button">Subscribe</button> -->
+                    <input type="submit" value="Subscribe" class="btn" name="Opportunity-submit" style="background-color: #ea0040; color: white;" />
+                </form>
+            </div>
+            &nbsp;&nbsp;
+            <div>
+                <ul class="list-inline social-buttons">
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <!--Links to be added when the social media account is created-->
+                            <i style="color: #ea0040" ; class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <!--Links to be added when the social media account is created-->
+                            <i style="color: #ea0040" ; class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/company/opportunitym/mycompany/">
+                            <i style="color: #ea0040" ; class="fab fa-linkedin-in"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p style="color: #6C757D">© Copyright and powered by <b style="color: white">opportunityM Ltd</b></p>
+        </div>
+    </footer>
+
+
+    <!-- Cookie Popup ------------------------------------------------------>
+    <div class="cookiePopup">
+        <p>Our website uses cookies to provide your browsing experience and relevant information. Before continuing to use our website, you agree & accept of our
+            <a href="http://opportunitym.com/cookies/" target="_blank">Cookie Policy</a> & <a href="http://opportunitym.com/privacy_policy/" target="_blank">Privacy Policy </a>
+        </p>
+        <button class="acceptCookie">Accept</button>
+        <button class="rejectCookie">Reject</button>
+    </div>
+
+</div>
+
+<!-- JavaScript Bundle with Popper--------------------------------------------------------------------------->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--isotope js----------------------------------------------------------------------------------------------->
+
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+<script src="{% static 'JS/index.js' %}"></script>
+
+<script>
+    $(function() {
+        $('.navbar-nav li a').filter(function() {
+            return this.href == location.href
+        }).parent().addClass('active').siblings().removeClass('active')
+        $('.navbar-nav li a').click(function() {
+            $(this).parent().addClass('active').siblings().removeClass('active')
+        })
+    })
+
+
+    //cookie popup ---------------------------------->
+
+    const cookieStorage = {
+        getItem: (item) => {
+            const cookies = document.cookie
+                .split(';')
+                .map(cookie => cookie.split('='))
+                .reduce((acc, [key, value]) => ({...acc,
+                    [key.trim()]: value
+                }), {});
+            return cookies[item];
+        },
+        setItem: (item, value) => {
+            document.cookie = `${item}=${value};`
+            localStorage.setItem(item, value);
+            sessionStorage.setItem(item, value);
+
+        }
+    }
+
+    const storageType = cookieStorage;
+    const consentName = 'cookieAccepted';
+
+    const cookiePopup = document.querySelector(".cookiePopup");
+    const acceptButton = document.querySelector(".acceptCookie");
+    const rejectButton = document.querySelector(".rejectCookie");
+
+    acceptButton.addEventListener("click", () => {
+        cookiePopup.classList.remove("active");
+        // localStorage.setItem("cookieAccepted", "true");
+        // sessionStorage.setItem("cookieAccepted", "true");
+        storageType.setItem(consentName, true);
+    })
+
+    rejectButton.addEventListener("click", () => {
+        cookiePopup.classList.remove("active");
+        // localStorage.setItem("cookieAccepted", "false");
+        // sessionStorage.setItem("cookieAccepted", "false");
+        storageType.setItem(consentName, false);
+    })
+
+    setTimeout(() => {
+        // if (!localStorage.getItem("cookieAccepted")) {
+        //     cookiePopup.classList.add("active");
+        // }
+        if (!storageType.getItem(consentName)) {
+            cookiePopup.classList.add("active");
+        }
+    }, 2000);
+
+    $(document).on('submit', '#subscribe_to_newsletter_form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'subscribe_to_newsletter',
+            data: {
+                newsletter: $('#newsletter').val(),
+                newsletter_firstname: $('#newsletter_firstname').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('#success1').html(data)
+            }
+        })
+    });
+</script>
+
+<!-- Hotjar Tracking Code for https://opportunitym.com/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3278133,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLCBEHKWWK"></script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLCBEHKWWK');
+</script>
+
+</html>

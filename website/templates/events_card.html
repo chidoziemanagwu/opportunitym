@@ -1,0 +1,207 @@
+{% load static %}
+{% load humanize %}
+{% load templatetagname %}
+
+<section id="events" class="pb-5">
+  <div class="container text-align-center">
+    {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col">
+        <label>
+          <input type="text" class="search" placeholder="search" />
+        </label>
+        <label>
+          <select name="type" class="filter-dropdown">
+            <option value="title" selected hidden>filter by type</option>
+            <option value="any">show all</option>
+            <option value="virtual">virtual</option>
+            <option value="physical">physical</option>
+          </select>
+        </label>
+        <label>
+          <select name="status" class="filter-dropdown">
+            <option value="title" selected hidden>filter by status</option>
+            <option value="any">show all</option>
+            <option value="open">open</option>
+            <option value="closed">closed</option>
+          </select>
+        </label>
+        <label>
+          <select name="worth" class="filter-dropdown">
+            <option value="title" selected hidden>filter by worth (£)</option>
+            <option value="any">show all</option>
+            <option value="0 - 49">0 - 49</option>
+            <option value="50 - 499">50 - 499</option>
+            <option value="500 - 4999">500 - 4,999</option>
+            <option value="5000 - 24999">5009 - 24,999</option>
+            <option value="25000 +">25,000 +</option>
+          </select>
+        </label>
+        <label>
+          <select name="capacity" class="filter-dropdown">
+            <option value="title" selected hidden>filter by guest capacity</option>
+            <option value="any">show all</option>
+            <option value="0 - 49">0 - 49</option>
+            <option value="50 - 99">50 - 99</option>
+            <option value="100 - 249">100 - 249</option>
+            <option value="250 - 499">259 - 499</option>
+            <option value="500 - 999">500 - 999</option>
+            <option value="1000 +">1,000 +</option>
+          </select>
+        </label>
+        <label>
+            <select class="sort-dropdown">
+                <option value="title" selected hidden>sort by</option>
+                <option value="any">none</option>
+                <option value="date">date</option>
+                <option value="name">name</option>
+                <option value="topic">topic</option>
+                <option value="type">type</option>
+            </select>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="d-flex flex-wrap">
+        {% for event in events %}
+          <div class="grid-element">
+            <div class="card" style="border-radius: 20px" id="event_{{ event.id }}">
+              <a href="{% url 'event_detail' id=event.id title=event.Speaking_Event_Name %}">
+                <img src="{{ event.Image_URL.url }}" alt="" style="width: 100%; height: 12.5rem; object-fit: cover;">
+              </a>
+              <div class="card-body">
+                <a href="{% url 'event_detail' id=event.id title=event.Speaking_Event_Name %}" style="text-decoration: none">
+                  <h4 class="card-title">{{ event.Speaking_Event_Name }}</h4>
+                </a>
+                <h6 class="card-date">{{ event.date }}</h6>
+                <p style="font-size: 12px">{{ event.Status }}</p>
+                <div class="card-divider"></div>
+                <div class="location">{{ event.Location }}</div>
+                <div class="mt-2" style="display: flex; flex-wrap: wrap;" id="event-info">
+                  <div class="card-section">
+                    <p class="card-subtitle">TYPE</p>
+                    <span class="card-info type">{{ event.Type }}</span>
+                  </div>
+                  <!-- <div class="card-section">
+                    <p class="card-subtitle">WORTH (£)</p>
+                    <span class="card-info worth">{{ event.Worth | intcomma }}</span>
+                  </div> -->
+                  <div class="card-section">
+                    <p class="card-subtitle">TOPIC</p>
+                    <span class="card-info topic">{{ event.Topic }}</span>
+                  </div>
+                  <!-- <div class="card-section">
+                    <p class="card-subtitle">GUEST CAPACITY</p>
+                    <span class="card-info capacity">{{ event.Capacity | intcomma }}</span>
+                  </div> -->
+                  <div class="card-section" hidden>
+                    <p class="card-subtitle">STATUS</p>
+                    <span class="card-info status">{{ event.status }}</span>
+                  </div>
+                </div>
+                
+                  <form class="form" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                    <label>
+                      <input
+                        hidden
+                        type="text"
+                        name="user_id"
+                        value="{{ user.id }}"
+                      />
+                    </label>
+                    <label>
+                      <input
+                        hidden
+                        type="text"
+                        name="event_id"
+                        value="{{ event.id }}"
+                      />
+                    </label>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                      {% if event.Creator == user and user|has_group:"organiser" %}
+                        {% if title == "launch your speaking event" %}
+                        <button
+                                class="btn btn-dark mx-1"
+                                type="submit"
+                                value="{{ event.id }}"
+                                name="see_all_applicants"
+                        ><i class="bi bi-people-fill"></i> See applicants</button>
+                        <button
+                                class="btn btn-primary mx-1"
+                                type="submit"
+                                value="{{ event.id }}"
+                                name="edit"
+                        ><i class="bi bi-pencil-fill"></i></button>
+                        <button
+                                class="btn btn-danger mx-1"
+                                type="submit"
+                                value="{{ event.id }}"
+                                name="delete"
+                                onclick="return confirm('Are you sure?')"
+                        ><i class="bi bi-trash"></i></button>
+                        {% endif %}
+                      {% else %}
+                        {% if user|speaker_already_apply:event %}
+                          <!-- <label>applied
+                          </label>
+                          <span style="width: 1rem;"></span> -->
+                          <button
+                                class="btn btn-light"
+                                type="submit"
+                                name="Unapply"
+                        >Cancel</button>
+                        {% else %}
+                        <button
+                                class="btn btn-dark"
+                                type="submit"
+                                name="Apply"
+
+                        >apply</button>
+                      {% endif %}
+                      {% endif %}
+                      {% else %}
+                      <style type="text/css">
+                        a { text-decoration:none; color:#fff; }
+                      </style>
+                      <button
+                                class="btn btn-dark"
+                                type="button"
+                                onclick="location.href='{% url 'user_login_page' %}'"
+                        >apply</button>
+                      {% endif %}
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="py-5">
+      <p class="lead">
+        Please <strong>log in </strong>{{message}}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+  <div>
+
+  </div>
+</section>
+
+<script>
+
+  // function confirm(){
+  //    alert("apply success") 
+  // }
+
+  ScrollReveal().reveal('.grid-element', { duration: 1000, distance: "-50px", mobile: false });  
+  
+  </script>

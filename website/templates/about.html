@@ -1,0 +1,128 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<!-- Breadcrumbs ------------------------------------------------- MD I AM NOT TOO SURE ABOUT THIS FOR NOW SO I AM GOING TO LEAVE IT HERE>-->
+
+<style>
+  #section-1{
+    margin-left: 180px; 
+    margin-right: 180px; 
+  }
+
+  #section-2-bg{
+    margin-left: 250px; 
+    margin-right: 250px; 
+  }
+  @media screen and (max-width: 1300px) {
+    #section-2-bg{
+      margin-left: 20px; 
+      margin-right: 20px; 
+      padding-left: 30px; 
+      padding-right: 30px; 
+    }
+    #section-1{
+      margin-left: 0; 
+      margin-right: 0; 
+      padding-left: 0; 
+      padding-right: 0; 
+      padding-top: 30px
+    }
+  }
+</style>
+
+<!-- First Container --------------------------------------------------->
+
+<div class="container-fluid bg-white" style="padding-top: 40px; padding-left: 70px; padding-right: 50px;">
+    <div class="section-title">
+        <h4 id="section-2-title" class="title pb-2 display-6">who we are</h4>
+        <div id="section-1" class="row d-flex justify-content-center align-items-center">
+          <div class="points col-lg-5 text-left" style="font-size: 20px; padding-bottom: 30px;">
+            <strong><span style="font-size: 1.6rem">Phase 1 》</span> Opportunity Portfolio + Opportunity Verified <br><span class="text-success">LAUNCHED</span></strong>
+            <br><br>
+            <strong><span style="font-size: 1.6rem">Phase 2 》</span> Opportunity Dictionary <br><span style="color: #ea0040">LAUNCHING</span></strong>
+            <br><br>
+            <strong><span style="font-size: 1.6rem">Phase 3 》</span> Opportunity Secrets <br><span style="color: #ea0040">LAUNCHING</span></strong>
+          </div>
+          <div class="graphs col-lg-7">
+            <img src="{% static 'images/graph1.png' %}" style="object-fit: cover; max-width: 400px; width: 90%; height: auto"/>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!-- Third container ------------------------------------------------------>
+
+<div class="container-fluid bg-white">
+  <div id="section-2-bg" class="section-title" style="background-color: #eaeaea; padding-top: 40px; border-radius: 30px">
+      <h4 id="section-2-title" class="title pb-4 display-6"><strong style="font-weight: 700">UK'S CHIEF OPPORTUNITY OFFICER</strong></h4>
+      <p> </p>
+      <img id="uk_chief_opportunity_officer" src="{% static 'images/oliver.jpeg' %}" style="object-fit: contain; max-width: 256px; max-height: 256px; width: 60%; height: 60%; border-radius: 50%;" />
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="points col-lg-7 text-left" style="font-size: 25px;">
+          <p> </p>
+          <strong style="font-size: 2rem" >Journey</strong>
+          <p> </p>
+          <ul style="font-size: 19px">
+            <li>At age <strong>17</strong>: elected Member of Youth Parliament</li>
+            <li>Endorsed by Prime Minister</li>
+            <li>Worked as unpaid intern with top CEO for 1 year</li>
+            <li>Promoted Chief of Staff</li>
+            <li>At age <strong>21</strong>: opportunityM was born</li>
+          </ul>
+        </div>
+      </div>
+      <a href="{% url 'book_oliver' %}">
+        <button id="book_oliver_button" class="btn" style="margin: 10px; background-color: #3BE4B6; width: 15rem">Book Oliver now</button>
+      </a>
+      <!-- <div class="graphs row" style="padding-top: 30px; padding-bottom: 20px;">
+        <img src="{% static 'images/graph2.png' %}" width="768" height="576" style="object-fit: contain;" />
+      </div> -->
+  </div>
+</div>
+
+
+<!-- Team Section -------------------------------------------------------->
+
+<section id="team" class="team section-bg">
+    <div class="fluid-container" style="padding-left: 70px; padding-right: 75px;">
+
+        <div class="section-title">
+            <h2>Meet our team</h2>
+            <br>
+        </div>
+
+        <div class="row">
+            {% for member in teamMembers %}
+            <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                <div class="member" data-aos="fade-up" data-aos-delay="200">
+                    <div class="member-img">
+                        <img 
+                          {% if member.image_url %}
+                          src="{{ member.image_url.url }}"
+                          {% else %}
+                          src="{% static 'images/placeholder.jpeg' %}"
+                          {% endif %}
+                          width="300" height="300" style="object-fit: contain;" class="img-fluid" alt="">
+                    </div>
+                    <div class="member-info bg-black">
+                        <h4 style="color: white">{{ member.fullName }}</h4>
+                        <span>{{ member.role }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+    ScrollReveal().reveal('.points', {duration: 1200, distance: "-40px", mobile: false});
+    ScrollReveal().reveal('.graphs', {duration: 1200, distance: "-40px", mobile: false});
+    ScrollReveal().reveal('.title', {duration: 1200, distance: "-40px", mobile: false});
+    ScrollReveal().reveal('.member', {duration: 1200, distance: "-40px", mobile: false});
+    ScrollReveal().reveal('#book_oliver_button', {duration: 1200, distance: "-40px", mobile: false});
+    ScrollReveal().reveal('#uk_chief_opportunity_officer', {duration: 1200, distance: "-40px", mobile: false});
+</script>
+{% endblock %}

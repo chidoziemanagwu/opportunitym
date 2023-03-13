@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<section id="error_404">
+    <div class="error_content">
+        <div class="error_image_404_container">
+            <div id="error_image_404" >
+                <img src="https://softr-prod.imgix.net/applications/c939f551-4da1-4acb-9137-ed96e4aeafdf/assets/0467d973-a9c8-4a81-a8f8-d60d206d449b.png"
+                height="50%" width="100%">
+            </div>
+        </div>
+        <div class="error_text_404_container">
+            <div id="error_text_404">
+                <p>404 error</p></br>
+            </div>
+            <div id="error_404_support_text">
+                <p>Not to worry - get in touch with us to</p>
+                <p>support below</p>
+            </div>
+            <div>
+                <a href="/get_in_touch"><input id="error_404_support_button" type="button" value="get in touch"></a>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

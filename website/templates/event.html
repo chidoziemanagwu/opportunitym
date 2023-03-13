@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load templatetagname %}
+
+{% block content %}
+    <section id="event" style="display: flex; justify-content: center;">
+        <div class="event-limiter" style="width: 80vw">
+            <div>
+                <a href="{{ event.id }}" style="text-decoration: none;" class="event-half">
+                    <img class="event-image" src="{{ event.Image_URL.url }}" alt="" />
+                </a>
+                <a href="{{ event.id }}" style="text-decoration: none; width: 100%" class="event-half">
+                    <h2 class="event-title">{{ event.Speaking_Event_Name }}</h2>
+                </a>
+            </div>
+            <p>{{ event.date }}</p>
+            <p style="font-size: 1.25rem;">{{ event.Location }}</p>
+            <div class="card-divider my-4"></div>
+            <div class="row">
+                <div class="col-lg-8 mx-2 mb-3">
+                    <h3 class="my-3">About this event</h3>
+                    <p>{{ event.Description }}</p>
+                </div>
+                <div class="col-lg-3 m-1" id="event-packs">
+                    <h4 class="p-2 mt-2" id="info">Information</h4>
+                    <div class="card-section mx-2">
+                        <span class="card-subtitle">TOPIC: {{ event.Topic }}</span>
+                    </div>
+                    <div class="card-section mx-2">
+                        <span class="card-subtitle">WORTH: £{{ event.Worth }}</span>
+                    </div>
+                    <div class="card-section mx-2">
+                        <span class="card-subtitle">CAPACITY: {{ event.Capacity }}</span>
+                    </div>
+                    <form class="form" method="POST">
+                        {% csrf_token %}
+                        {% if event.Creator == user %}
+                        <button
+                            class="btn btn-dark mx-1 my-2"
+                            type="submit"
+                            value="{{ event.id }}"
+                            name="see_all_applicants"
+                        >see applicants</button>
+
+                        <button
+                            class="btn btn-primary mx-1 my-2"
+                            type="submit"
+                            value="{{ event.id }}"
+                            name="edit"
+                        ><i class="bi bi-pencil-fill"></i></button>
+
+                        <button
+                            class="btn btn-danger mx-1 my-2"
+                            type="submit"
+                            value="{{ event.id }}"
+                            onclick="return confirm('Are you sure?')"
+                            name="delete"
+                        ><i class="bi bi-trash"></i></button>
+                        {% else %}
+                        {% if user|speaker_already_apply:event %}
+                        <button class="btn btn-light my-4 mx-2" type="cancel" value="{{ event.id }}" name="Unapply" style="width: 100px;">Cancel</button>
+                        {% else %}
+                        <button class="btn btn-dark my-4 mx-2" type="submit" value="{{ event.id }}" name="Apply" style="width: 100px;">Apply</button>
+                        {% endif %}
+                        {% endif %}
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    <script>
+    </script>
+    </section>
+{% endblock %}

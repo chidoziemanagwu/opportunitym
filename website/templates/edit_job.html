@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+
+<title>Edit {{ job }}</title>
+
+<style>
+  .errorlist{
+    color: red;
+  }
+</style>
+
+<div class="d-flex flex-column justify-content-center align-items-center mt-3">
+  <div style="width: 80%">
+    <h1>{{ job }}</h1>
+    <a href="{% url 'create_jobs' %}#job_{{ job.id }}"><button class="btn btn-secondary" onclick="return confirm('Are you sure you want to discard changes?')">Back</button></a>
+    {% if form.errors %}
+    {% for errors in form.errors %}
+    <div class="alert alert-danger" role="alert">{{errors}} error</div>
+    {% endfor %}
+    {% endif %}
+    <br />
+    
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" class="btn btn-primary my-3" value="Save">
+    </form>    
+  </div>
+</div>
+{% endblock %}

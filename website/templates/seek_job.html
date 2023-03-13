@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<section id="job_seekers_page" style="margin-top: -60px">
+  <div class="job_seekers_container_img hero_image_background"></div>
+
+  <div class="container text-align-center pt-5">
+    <h2>Interested in one of our job opportunities? why not apply to one?</h2>
+  </div>
+
+  {% include "job_card.html" %}
+</section>
+
+{% endblock %}

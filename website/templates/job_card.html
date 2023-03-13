@@ -1,0 +1,154 @@
+{% load static %}
+{% load humanize %}
+{% load templatetagname %}
+
+<section id="jobs" class="pb-5">
+  <div class="container text-align-center">
+    {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col">
+        <label>
+          <input type="text" class="search" placeholder="search" />
+        </label>
+        <label>
+          <select name="type" class="filter-dropdown">
+            <option value="title" selected hidden>filter by type</option>
+            <option value="any">show all</option>
+            <option value="Part time">Part time</option>
+            <option value="Full time">Full time</option>
+            <option value="Contract">Contract</option>
+            <option value="Permanent">Permanent</option>
+          </select>
+        </label>
+        <label>
+          <select name="status" class="filter-dropdown">
+            <option value="title" selected hidden>filter by status</option>
+            <option value="any">show all</option>
+            <option value="open">open</option>
+            <option value="closed">closed</option>
+          </select>
+        </label>
+        <label>
+          <select name="worth" class="filter-dropdown">
+            <option value="title" selected hidden>filter by Salary (£/yr)</option>
+            <option value="any">show all</option>
+            <option value="0 - 19.999k">0 - 20k</option>
+            <option value="20k - 39.999k">20k - 39.999k</option>
+            <option value="40k - 59.999k">40k - 59.999k</option>
+            <option value="60k - 79.999k">60k - 79.999k</option>
+            <option value="80k+">80k+</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="d-flex flex-wrap">
+        {% for job_position in jobs %}
+          <div class="grid-element">
+            <div class="card" style="border-radius: 20px" id="job_{{ job_position.id }}">
+              <a href="{% url 'job_detail' id=job_position.id title=job_position.Job_role %}">
+                <img src="{{ job_position.Image_URL.url }}" alt="" style="width: 100%; height: 12.5rem; object-fit: contain;">
+              </a>
+              <div class="card-body">
+                <a href="{% url 'job_detail' id=job_position.id title=job_position.Job_role %}" style="text-decoration: none">
+                  <h4 class="card-title">{{ job_position.Job_role }}</h4>
+                </a>
+                <h6 class="card-date">{{ job_position.Deadline }}</h6>
+                <p style="font-size: 12px">{{ job_position.Status }}</p>
+                <div class="card-divider"></div>
+                <div class="location">{{ job_position.Company }}</div>
+                <div class="mt-2" style="display: flex; flex-wrap: wrap;" id="job-info">
+                  <div class="card-section">
+                    <p class="card-subtitle">TYPE</p>
+                    <span class="card-info type">{{ job_position.Job_mode }}</span>
+                  </div>
+
+                  <div class="card-section">
+                    <p class="card-subtitle">SALARY</p>
+                    <span class="card-info topic">£{{ job_position.Salary }}</span>
+                  </div>
+                  <div class="card-section" hidden>
+                    <p class="card-subtitle">STATUS</p>
+                    <span class="card-info status">{{ job_position.Status }}</span>
+                  </div>
+                </div>
+
+                
+                  <form class="form" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                    <label>
+                      <input
+                        hidden
+                        type="text"
+                        name="user_id"
+                        value="{{ user.id }}"
+                      />
+                    </label>
+                    <label>
+                      <input
+                        hidden
+                        type="text"
+                        name="job_id"
+                        value="{{ job_position.id }}"
+                      />
+                    </label>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                      {% if job_position.Creator == user %}
+                        <button
+                          class="btn btn-dark mx-1"
+                          type="submit"
+                          value="{{ job_position.id }}"
+                          name="see_all_applicants"
+                        ><i class="bi bi-people-fill"></i> see applicants</button>
+
+                        <button
+                          class="btn btn-primary mx-1"
+                          type="submit"
+                          value="{{ job_position.id }}"
+                          name="edit"
+                        ><i class="bi bi-pencil-fill"></i></button>
+
+                        <button
+                          class="btn btn-danger mx-1"
+                          type="submit"
+                          value="{{ job_position.id }}"
+                          onclick="return confirm('Are you sure?')"
+                          name="delete"
+                        ><i class="bi bi-trash"></i></button>
+                      {% endif %}
+                      {% endif %}
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="py-5">
+      <p class="lead">
+        Please <strong>log in </strong>{{message}}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+  <div>
+
+  </div>
+</section>
+
+<script>
+  ScrollReveal().reveal('.grid-element', { duration: 1000, distance: "-50px", mobile: false });  
+</script>
+
+<!-- 
+<title>{{title}}</title>
+
+<p>This is where the job cards will go</p> -->

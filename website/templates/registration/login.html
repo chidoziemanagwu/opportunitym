@@ -1,0 +1,157 @@
+{% extends 'base.html' %} {% load static %}{% block content %}
+
+<style>
+
+  /*Show/Hide Password button*/
+
+    #toggle {
+      background: url({% static 'images/icons/eye.png' %});
+      background-size:cover;
+      float:right;
+      margin-right:1em;
+      transform: translateY(-200%);
+      width:16px;
+      height:16px;
+      cursor: pointer;
+    }
+
+    .custom-checkbox .custom-control-input:checked~ .custom-control-label::before{
+        background-color:#3BE4B6!important;
+    }
+
+    .custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label::before {
+      box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 255, 0, 0.25)
+    }
+    .custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+      box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25)
+    }
+    .custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
+      background-color: #C8FFC8; 
+    }
+
+</style>
+
+<title>SIGN IN</title>
+<section class="text-lowercase" id="Login">
+  <form method="post">
+    {% csrf_token %} {% if messages %}
+    <!---->
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% endfor %}
+    <!---->   
+
+    {% endif %}
+
+      <div class="second_section p-2">
+        <div class="row">
+          <div class="col">
+            <div class="log_in_dev">
+              <div class="container py-5 h-100">
+                <div
+                  class="row d-flex align-items-center justify-content-center h-100"
+                >
+                  <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                      LOG IN
+                    </p>
+
+                    <form>
+                      <!-- email input -->
+                      <div class="form-outline mb-4">
+                        
+
+                        <input
+                          type="text"
+                          id="form1Example13"
+                          class="form-control form-control-lg"
+                          name="email"
+                          placeholder="email"
+                        />
+                        <!--<label class="form-label" for="form1Example13"
+                          >email</label
+                        >-->
+                      </div>         
+
+                      <!-- Password input -->
+                      <div class="form-outline mb-4">
+                       
+                        <input
+                          type="password"
+                          id="form1Example23"
+                          class="form-control form-control-lg"
+                          name="password"
+                          placeholder="password"
+                        />
+                        <div id="toggle" onclick="show_pwd()">
+                        </div> 
+                      </div>
+
+                      <div
+                        class="d-flex justify-content-around align-items-center mb-4"
+                      >
+                        <!-- Checkbox -->
+                        <div class="form-check custom-checkbox">
+                         
+                          <input
+                            class="custom-control-input"
+                            type="checkbox"
+                            value=""
+                            id="form1Example3"
+                            checked
+                          />
+                          <label class="custom-control-label" for="form1Example3">
+                            Remember me
+                          </label>
+                        </div>
+                        <a href="{% url 'reset_password' %}" style="color: #3BE4B6">Forgot password?</a>
+                      </div>
+
+                      <!-- Submit button -->
+                      <button
+                        type="submit"
+                        class="btn btn-lg btn-block"
+                        value="Login"
+                        style="background-color: #3BE4B6"
+                      >
+                        sign in
+                      </button>
+
+                      <div class="divider d-flex align-items-center my-4">
+                        <p
+                          hidden
+                          class="text-center fw-bold mx-3 mb-0 text-muted"
+                        >
+                          or
+                        </p>
+                      </div>
+
+                      <a hidden class="btn btn-block btn-social btn-google">
+                        <span class="fab fa-google"></span> sign in with Google
+                      </a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+
+<!-- Show/Hide password script -->
+<script>
+  function show_pwd() {
+    var x = document.getElementById("form1Example23");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+</script>
+
+{% endblock %}

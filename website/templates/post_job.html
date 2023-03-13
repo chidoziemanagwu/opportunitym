@@ -1,0 +1,305 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+
+<title>Create job posting</title>
+
+
+<style> /* REMOVE UP AND DOWN BUTTON FROM INPUT NUMBER */
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
+<section id="create_job_post" style="margin-top: -60px">
+  <!-- 1st section-->
+
+  <div
+    class="create_job_post_img_section text-align-center hero_image_background"
+  >
+  {% csrf_token %} {% if errors %}
+  <!---->
+  {% for errors in errors %}
+  <div class="alert alert-danger" role="alert">{{errors}} error</div>
+  {% endfor %}
+  {% endif %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text_box">
+            <h2 style="margin-top: 150px;">Create a job post</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-align-center pt-5">
+    <h2>Looking to recruit?</h2>
+    <p>Use the form to post a job position</p>
+  </div>
+
+  {% if user.is_authenticated %}
+
+  <!--2nd secion-->
+  <div class="begin_form_container">
+    <section id="marketplace_data_input_page">
+      <div class="form-container">
+        <form class="form" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- {{form}} -->
+
+          <tr>
+            <th><label hidden for="id_Creator">Job poster:</label></th>
+            <td>
+              <select hidden name="Creator" required id="id_Creator">
+                {% for user_name in users_list %}
+                {% if user_name.username == user.username %}
+                <option value="{{user_name.id}}" selected>{{user_name}}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          <tr>
+          <th><label for="id_Image_URL">Image:<br>(must be 2880 x 1440 px and less than 2 MB)</label>
+          
+            {% if errors %}
+              <label style="color:red; font-weight:bold;">Please upload the image again</label>
+            {% endif %}
+            </th>
+            <td>
+              <input
+                type="file"
+                name="Image_URL"
+                accept="image/*"
+                id="id_Image_URL"
+                onchange="checkImageSize(this)"
+                {% if errors %}
+                style="border-color:red;"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label for="id_Job_Role">Job role: </label>
+            </th>
+            <td>
+              <input
+                type="text"
+                name="Job_role"
+                maxlength="100"
+                placeholder="Job role"
+                required
+                id="id_Job_Role"
+                
+                {% if errors %}
+                value="{{ form.Job_role }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              <label for="Email">Employer's email: </label>
+            </th>
+            <td>
+              <input
+                type="text"
+                name="Email"
+                maxlength="100"
+                placeholder="example@example.com"
+                required
+                id="Email"
+                
+                {% if errors %}
+                value="{{ form.Email }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              <label for="id_Company">Company: </label>
+            </th>
+            <td>
+              <input
+                type="text"
+                name="Company"
+                maxlength="100"
+                placeholder="Company name"
+                required
+                id="id_Company"
+                
+                {% if errors %}
+                value="{{ form.Company }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <th><label for="id_Job_mode">Type:</label></th>
+            <td>
+              <select name="Job_mode" id="id_Job_mode">
+
+                <!-- Needs to be edited. Check the 'Type' -->
+                {% if form.Job_mode == 'Part_time' %}
+                  <option value="Part time" selected>Part time</option>
+                {% elif form.Job_mode == 'Full_time' %}
+                    <option value="Full time">Full time</option>
+                {% elif form.Job_mode == 'Contract' %}
+                    <option value="Contract">Contract</option>
+                {% elif form.Job_mode == 'permanent' %}
+                    <option value="Permanent">Permanent</option>
+                {% else %}
+                
+                <option value="Part time" selected>Part time</option>
+                <option value="Full time">Full time</option>
+                <option value="Contract">Contract</option>
+                <option value="Physical">Permanent</option>
+
+                {% endif %}
+                      
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Salary"> Salary (£/yr):</label></th>
+            <td>
+              <input
+                type="number"
+                name="Salary"
+                placeholder="e.g. 20000"
+                min="0"
+                required
+                id="id_Salary"
+
+                {% if errors %}
+                value="{{ form.Salary }}"
+                {% endif %}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Deadline">Deadline:</label></th>
+            <td>
+              <input
+                style="background-color:#D3D3D3;"
+                type="date"
+                name="Deadline"
+                placeholder="YYYY-MM-DD"
+                required
+                id="id_Deadline"
+                onchange="isFutureDate(this.value)"
+                {% if errors %}
+                  style="border-color:red;"
+                {% endif %}
+              /><input type="hidden" name="initial-date" id="initial-id_date" />
+              <p id="id_dateMessage" style="color: red"></p>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="id_Description">Description:</label></th>
+            <td>
+              <textarea
+                rows="8"
+                name="Description"
+                placeholder="Add a description"
+                maxlength="5000"
+                required
+                id="id_Description"
+
+                {% if errors %}
+                value="{{ form.Description }}"
+                {% endif %}
+              ></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <th><label hidden for="id_Status">Status:</label></th>
+            <td>
+              <select hidden name="Status" id="id_Status">
+                
+                {% if form.Status == 'Open' %}
+                  <option value="Open" selected>Open</option>
+                {% elif form.Status == 'Closed' %}
+                  <option value="Closed" selected>Closed</option>
+                {% else %}
+                  <option value="Open" selected>Open</option>
+                  <option value="Closed">Closed</option>
+                {% endif %}
+              </select>
+            </td>
+          </tr>
+
+          <button
+            type="button submit "
+            name="Create_Job"
+            class="btn btn-primary btn-lg"
+          >
+            submit
+          </button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  {% else %}
+
+  {% endif %}
+  {% include "job_card.html" %}
+
+  <script>
+    const dateMessage = document.getElementById("id_dateMessage");
+    var today = new Date();
+    var checkDate;
+
+    function checkImageSize(element) {
+      let file = element.files[0];
+      console.log(file.size / 1000000);
+      if (file.size / 1000000 > 2) {
+          alert("Image file size is too big");
+          element.value = "";
+          return;
+      }
+      let image = new Image();
+      image.onload = function () {
+        URL.revokeObjectURL(this.src);
+        console.log(this.width, this.height);
+        if (this.width > 2880 || this.height > 1440) {
+          alert("Image dimensions is too big");
+          element.value = "";
+        }
+      };
+      image.src = URL.createObjectURL(file);
+    }
+
+    //Check date restraints
+    function checkValidDate(date1, date2){
+      if(checkDate >= today){
+        dateMessage.innerHTML = "";
+      }
+      else{
+        dateMessage.innerHTML = "Cannot select past date or time. Please select a future date or time.";
+      }
+    }
+
+    function isFutureDate(date) {
+      checkDate = new Date(date);
+      checkDate.setHours(23, 59, 59);
+      checkValidDate(today, checkDate);
+    }
+  </script>
+</section>
+{% endblock %}

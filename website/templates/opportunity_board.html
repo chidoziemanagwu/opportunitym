@@ -1,0 +1,86 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<style>
+    .breakLine{
+        width: 50%;
+    }
+
+    .card-sub-heading{
+        width: 200px; 
+        text-align: center;
+        font-size: 15px;
+        font-style: italic;
+    }
+
+    .partner_logo{
+        height: 40px;
+        width: auto;
+        margin: 5px;
+    }
+
+    .profile_cards{
+        width: 200px; 
+        height: 200px; 
+        object-fit: contain; 
+        border-radius: 15px; 
+        border: 5px solid #ffebf0;
+    }
+
+    @media screen and (max-width: 1080px) {
+        .breakLine{
+            width: 90%;
+        }
+    }
+</style>
+
+
+<title>{{title}}</title>
+<div class="d-flex flex-column justify-content-center align-items-center pt-4">
+    <!-- <h4 id="section-2-title" class="title pb-2 display-6">Opportunity Board</h4> -->
+    <div class="d-flex justify-content-center align-items-center m-1" style="border: 5px solid #ea0040; border-radius: 30px; background-color: black">
+        <div class="d-flex flex-column justify-content-center align-items-center" style="border-radius: 10px; margin: 20px; padding: 20px; background-color: #ffebf0;">
+            <img class="partner_logo m-1" style="width: 100%; max-width: 500px; height: auto" src="{% static 'images/board_title_logo.png' %}" alt="" />
+            <div class="partner-logos m-1">
+                <img class="partner_logo" src="{% static 'images/partner_logos/pinterest_logo.png' %}" alt="" />
+                <img class="partner_logo" src="{% static 'images/partner_logos/microsoft_logo.png' %}" alt="" />
+                <img class="partner_logo" src="{% static 'images/partner_logos/aviva_logo.png' %}" alt="" />
+                <img class="partner_logo" src="{% static 'images/partner_logos/starling_bank_logo.png' %}" alt="" />
+                <img class="partner_logo" src="{% static 'images/partner_logos/mastercard_logo.png' %}" alt="" />
+                <img class="partner_logo" src="{% static 'images/partner_logos/linkedin_logo.png' %}" alt="" />
+            </div>
+        </div>
+    </div>
+    <div class="m-1 px-4">
+        Here to open and equalise meaningful opportunities for the greatest number of people
+    </div>
+    <div class="breakLine m-2" style="background-color: #ffebf0; border-radius: 30px; height: 15px;">
+    </div>
+    <div class="row mb-4">
+        <div class="col-6 col-sm-4 d-flex flex-column align-items-center">
+            <img 
+                src="{% static 'images/people/IMG_1731.jpg' %}" 
+                class="profile_cards my-2"
+                alt="" 
+            />
+            <p class="card-sub-heading">Country Manager, UK, IE, NL and Nordic. <strong>Milka Privodanova.</strong></p>
+        </div>    
+        <div class="col-6 col-sm-4 d-flex flex-column align-items-center">
+            <img 
+                src="{% static 'images/people/IMG_1723.jpg' %}" 
+                class="profile_cards my-2"
+                alt="" 
+            />
+            <p class="card-sub-heading">CEO UK & Ireland General Insurance, Aviva PLC. <strong>Adam Winslow.</strong></p>
+        </div>   
+        <div class="col-6 col-sm-4 d-flex flex-column align-items-center">
+            <img 
+                src="{% static 'images/people/IMG_1717.jpg' %}" 
+                class="profile_cards my-2"
+                alt="" 
+            />
+            <p class="card-sub-heading">President, UK & Ireland of Mastercard. <strong>Kelly Devine.</strong></p>
+        </div>      
+    </div>
+    
+</div>
+
+{% endblock %}

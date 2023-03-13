@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<!-- First Container --------------------------------------------------->
+
+<div style="padding-top: 40px;">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <h4 id="section-2-title" class="title pb-2 display-6">Contact Us</h4>
+        <p>For all enquiries, please use the form below</p>
+        <br/>
+        <div style="margin-left: 40px; margin-right: 40px; width: 80%; max-width: 500px;">
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% if message %} <p style="font-size: large; text-align: center;">{{ message }}</p> {% endif %}
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input name="full_name" type="text" class="form-control" id="full_name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <select name="Appearance" id="book_oliver_appearance" class="form-control" required>
+                        <option value="Others" selected>What can we help you with?</option>
+                        <option value="Account queries">Account queries</option>
+                        <option value="Booking Oliver">Booking Oliver</option>
+                        <option value="Submitting opportunities">Submitting opportunities</option>
+                        <option value="Speakers M">Speakers M</option>
+                        <option value="Careers M">Careers M</option>
+                        <option value="Products">Products</option>
+                        <option value="Services">Services</option>
+                        <option value="Newsletters">Newsletters</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Message" class="form-control" id="message" rows="4" required></textarea>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <input type="submit" name="submit_form" value="Send message" class="btn" style="margin: 10px; background-color: #3BE4B6"/>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

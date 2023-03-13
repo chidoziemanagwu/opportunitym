@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Hello, {{ user.username|default:'Guest' }}!</h1>
+<div>
+  {% if user.is_authenticated %}
+  <h1>U have logged in</h1>
+
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Please select the group</h1>
+          <select name="group" id="group">
+            <option value="basic">Basic</option>
+            <option value="speaker">Speaker</option>
+            <option value="organiser">Organiser</option>
+          </select>
+
+          <button type="submit" class="btn btn-dark">submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <a href="{% url 'logout' %}">Logout</a>
+  {% else %}
+  <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+</div>
+{% endblock %}

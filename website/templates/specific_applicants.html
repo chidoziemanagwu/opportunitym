@@ -1,0 +1,163 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+    <title>{{ title }}</title>
+
+    <section id="specific_applicants">
+
+
+        <div class="applicants_container" id="all_applicants">
+
+            {% for i in users_profile %}
+                <!---->
+                {% for user in users_list %}
+                    <!---->
+                    {% if user.id == i.user_id %}
+                        <!-- Modal -->
+                        <div class="modal fade " id="staticBackdrop{{ user.id }}" data-bs-backdrop="static"
+                             data-bs-keyboard="false"
+                             tabindex="-1"
+                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Profile information</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="specific_applicant" style="margin: 0 auto">
+                                            <div class="video_area">
+                                                <img class="applicants_headshot"
+                                                     id="picture"
+                                                     src="{{ i.profile_pic_URL.url }}"
+                                                />
+                                            </div>
+                                            <h4 class="applicants_header">
+                                                {{ user.first_name }} {{ user.last_name }}
+                                            </h4>
+                                            <div><h4
+                                                    class="applicant_single_line_text">{{ i.Job_title }} {{ i.Company }}</h4>
+                                            </div>
+                                            <h4>contact: {{ i.Phone_number }}</h4>
+
+
+                                            <div style="margin-top: 20px;min-height: 500px;word-break: break-all"><h4>
+                                                bio</h4>{{ i.bio }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary">go to stripe</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="specific_applicant">
+                            <img src="/static/images/icons/4781829_circle_customer_help_info_information_icon.png" data-bs-toggle="modal"
+                                 data-bs-target="#staticBackdrop{{ user.id }}"
+                                 style="cursor: pointer;width: 25px;height: 25px;margin-left: 230px">
+                            <div
+                                    class="video_area"
+                                    onmouseover="videoPlayback(this)"
+                                    onmouseout="videoStopped(this)"
+                            >
+                                <img
+                                        class="applicants_headshot"
+                                        id="picture"
+                                        src="{{ i.profile_pic_URL.url }}"
+                                />
+                                <video
+                                        class="applicants_video"
+                                        id="video"
+                                        src="{{ i.bio_video_URL.url }}"
+                                        onclick="requestFullScreen(this)"
+                                        muted
+                                ></video>
+                            </div>
+                            <h4 class="applicants_header">
+                                {{ user.first_name }} {{ user.last_name }}
+                            </h4>
+                            <h4 class="applicant_single_line_text">{{ i.Job_title }}</h4>
+                            <h5 class="applicant_single_line_text">{{ i.Company }}</h5>
+                            <button class="button-group">I choose you</button>
+                        </div>
+                    {% endif %}
+                    <!---->
+                {% endfor %}
+                <!---->
+            {% endfor %}
+        </div>
+        <button id="applicants_see_more" onclick="loadMore()">see more</button>
+
+        <script>
+            function loadMore() {
+                let applicants = document.getElementById("all_applicants");
+                let see_more_button = document.getElementById("applicants_see_more");
+                if (applicants.style.height != "auto") {
+                    applicants.style.overflow = "visible";
+                    applicants.style.height = "auto";
+                    see_more_button.innerText = "see less";
+                } else {
+                    applicants.style.overflow = "hidden";
+                    applicants.style.height = "950px";
+                    see_more_button.innerText = "see more";
+                }
+            }
+
+            function videoPlayback(video) {
+                let children = video.children;
+                children[0].style.display = "none";
+                children[1].style.display = "inline";
+                children[1].style.borderRadius = "150px";
+                children[1].setAttribute("autoplay", "autoplay");
+                children[1].setAttribute("loop", "loop");
+                children[1].play();
+            }
+
+            function videoStopped(video) {
+                let children = video.children;
+                children[0].style.display = "inline";
+                children[1].style.display = "none";
+                children[1].pause();
+            }
+
+
+            function videoPlayback(video) {
+                let children = video.children;
+                children[0].style.display = "none";
+                children[1].style.display = "inline";
+                children[1].style.borderRadius = "150px";
+                children[1].setAttribute("autoplay", "autoplay");
+                children[1].setAttribute("loop", "loop");
+                children[1].play();
+            }
+
+            function videoStopped(video) {
+                let children = video.children;
+                children[0].style.display = "inline";
+                children[1].style.display = "none";
+                children[1].pause();
+            }
+
+            function requestFullScreen(element) {
+                let userAgent = navigator.userAgent;
+                if (userAgent.indexOf("Firefox") > -1) {
+                    alert('your browser not supports open this video, please right click to see the full video');
+                } else {
+                    element.setAttribute("autoplay", "autoplay");
+                    element.style.borderRadius = "0px";
+                    element.requestFullscreen();
+                }
+            }
+
+            function searchApplicants() {
+
+            }
+
+        </script>
+    </section>
+{% endblock %}

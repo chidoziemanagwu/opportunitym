@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/news.css' %}">
+<title>{{title}}</title>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'news' %}">
+                <button class="btn mt-3"><i class="bi bi-arrow-left"></i> Back to posts</button>
+            </a>
+            <div class="post-title">
+                <h1 class="display-4">
+                    {{ post.title }}
+                </h1>
+            </div>
+            <div class="d-flex justify-content-center">
+                {% if post.image != None %}
+                <img style="width: 80%; height: 300px; max-width: 600px; object-fit: cover;" src="{{ post.image.url }}" alt="Card image cap">
+                {% endif %}
+            </div>
+            <p class="m-4" style="color: gray; font-size: 15px">By {{ post.author }} | {{ post.post_date }}</p>
+            <div class="post-body m-4">
+                {{ post.body|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<section class="d-flex flex-column justify-content-center align-items-center">
+    <h1 class="display-4">Book Oliver form</h1>
+    <div style="margin-left: 40px; margin-right: 40px; width: 80%; max-width: 500px;">
+        <p style="font-size: larger; color: red;">{% if message %} {{ message}} {% endif %}</p>
+        <form class="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="d-flex flex-column justify-content-center align-items-center" style="margin-top: 40px; margin-bottom: 20px">
+                <h5>About you</h5>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_first_name">1. First name*</label>
+                    <input name="Firstname" type="text" class="form-control" id="book_oliver_first_name" placeholder="First name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_last_name">2. Last name*</label>
+                    <input name="Lastname" type="text" class="form-control" id="book_oliver_last_name" placeholder="Last name" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_email">3. Email*</label>
+                    <input name="Email"  type="email" class="form-control" id="book_oliver_email" placeholder="Email" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_tel">4. Mobile number*</label>
+                    <input name="Tel" type="tel" class="form-control" id="book_oliver_tel" placeholder="Telephone number (with country code)" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="book_oliver_linkedin">5. Linked in URL</label>
+                <input name="Url"  type="url" class="form-control" id="book_oliver_linkedin" placeholder="Linked in URL">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_job_title">6. Job title*</label>
+                    <input name="JobTitle" type="text" class="form-control" id="book_oliver_job_title" placeholder="Job title" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_company">7. Company*</label>
+                    <input name="Company" type="text" class="form-control" id="book_oliver_company" placeholder="Company" required>
+                </div>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center" style="margin-top: 40px; margin-bottom: 20px">
+                <h5>Appearance information</h5>
+            </div>
+            <div class="form-group">
+                <label for="book_oliver_appearance">8. What would you like to book Oliver for?*</label>
+                <select name="Appearance" id="book_oliver_appearance" class="form-control" required>
+                  <option value="Not selected" selected>Choose...</option>
+                  <option value="Speaking on a panel">Speaking on a panel</option>
+                  <option value="Speaking on a podcast">Speaking on a podcast</option>
+                  <option value="Becoming an ambassador">Becoming an ambassador</option>
+                  <option value="Speaking at an internal event">Speaking at an internal event</option>
+                  <option value="Brand partnerships">Brand partnerships</option>
+                  <option value="Appearing on TV/Radio">Appearing on TV/Radio</option>
+                  <option value="Others">Others (Please specify in question 9)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="book_oliver_appearance_details">9. Please share more details about the appearance selected (500 characters max)*</label>
+                <textarea name="AppearanceDetails" class="form-control" id="book_oliver_appearance_details" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="book_oliver_appearance_location">10. Please share more details about the location you wish to have this appearance. (If this is a virtual appearance, please share the platform and link if possible)*</label>
+                <input name="Location" type="text" class="form-control" id="book_oliver_appearance_location" placeholder="Location" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_appearance_budget">11. Estimated budget for the appearance*</label>
+                    <select name="Budget" id="book_oliver_appearance_budget" class="form-control" required>
+                      <option value="Not selected" selected>Choose...</option>
+                      <option value="£0 - £1,999">£0 - £1,999</option>
+                      <option value="£2,000 - £3,999">£2,000 - £3,999</option>
+                      <option value="£4,000 - £5,999">£4,000 - £5,999</option>
+                      <option value="£6,000 - £7,999">£6,000 - £7,999</option>
+                      <option value="£8,000 - £9,999">£8,000 - £9,999</option>
+                      <option value="£10,000 +">£10,000 +</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="book_oliver_appearance_date">12. Date (or estimated date) of appearance*</label>
+                    <input name="Dateandtime" type="datetime-local" class="form-control" id="book_oliver_appearance_date" required/>
+                </div>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <button type="submit" name="submit_form" class="btn" style="margin: 10px; background-color: #3BE4B6">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

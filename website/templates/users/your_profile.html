@@ -1,0 +1,234 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<title>{{ title }}</title>
+
+<head>
+  {% if messages %}
+  <!--get the error-->
+  {% for msg in messages %}
+  <!--pop up the error message -->
+  <div class="alert alert-danger">
+    <strong>{{ msg.message }}</strong>
+  </div>
+  <!--end for-->
+  {% endfor %}
+  <!--end if-->
+  {% endif %}
+</head>
+
+<section id="your_profile">
+  <div class="begin_form_container">
+    <div class="form-container">
+      <h1 class="display-4 mb-4">Update your Profile</h1>
+      <form class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select hidden name="user" required id="user">
+          <option value="{{ user.id }}" selected></option>
+        </select>
+        {% comment %} {% if profile %} {% endcomment %}
+
+        <div id="profile_image_container">
+          <label>Profile image</label>
+          <input
+            type="file"
+            id="profile_image_upload"
+            name="profile_pic_URL"
+            accept="image/*"
+            value="{{ profile.profile_pic_URL }}"
+            style="width: 100%; height: 250px;"
+          />
+        </div>
+
+        <label>First name</label>
+        <input
+          type="text"
+          id="profile_first_name"
+          name="first_name"
+          maxlength="50"
+          placeholder="first name"
+          value="{{ user.first_name }}"
+        />
+        <label>Last name</label>
+        <input
+          type="text"
+          id="profile_last_name"
+          name="last_name"
+          maxlength="50"
+          placeholder="last name"
+          value="{{ user.last_name }}"
+        />
+        <label>Job title</label>
+        <input
+          type="text"
+          id="profile_job_title"
+          name="Job_title"
+          placeholder="job title"
+          value="{{ profile.Job_title }}"
+        />
+        <label>Company</label>
+        <input
+          type="text"
+          id="profile_company"
+          name="Company"
+          placeholder="company"
+          value="{{ profile.Company }}"
+        />
+        <label>Email</label>
+        <input
+          type="text"
+          id="profile_job_email"
+          name="email"
+          placeholder="email"
+          disabled
+          value="{{ user.email }}"
+        />
+        <label>Phone number</label>
+        <input
+          type="text"
+          id="profile_job_phone"
+          name="Phone_number"
+          placeholder="phone number"
+          value="{{ profile.Phone_number }}"
+        />
+        <!--<select
+          id="profile_type"
+          name="type"
+          placeholder="speaker/organiser/both"
+        >
+          <option value="" disabled selected>speaker/organiser/basic</option>
+          <option value="speaker">speaker</option>
+          <option value="organiser">organiser</option>
+          <option value="both">both</option>
+        </select>-->
+
+        <label>Bio</label>
+        <textarea id="profile_bio" name="bio" placeholder="bio">{{ profile.bio }}</textarea>
+        <div id="profile_video_container">
+          <label>2 Min video Bio</label>
+          <input
+            type="file"
+            id="profile_video_upload"
+            name="bio_video_URL"
+            accept="video/*"
+            value="{{ profile.bio_video_URL }}"
+            onchange="getVideoTime()"
+            style="width: 100%; height: 250px;"
+          />
+        </div>
+        <button type="submit" value="submit" id="profile_update">
+          <b>Update profile</b>
+        </button>
+      </form>
+      {% comment %} {% endif %} {% endcomment %}
+
+      <div class="bank_details_section">
+        <form action="" method="post">
+          <input type="hidden" name="stripe_button" />
+          {% csrf_token %}
+          <h4>register Stripe</h4>
+          <label class="form-check-label">
+            <input
+              style="height: 24px; width: 24px"
+              type="checkbox"
+              value=""
+              class="stripe_policy_checkbox"
+              onclick="checkSelected(this)"
+            />
+            I agree all statements in
+            <a href="https://stripe.com/en-gb/legal/connect-account"
+              >Stripe account policy</a
+            >
+            and
+            <a href="https://support.stripe.com/topics/privacy"
+              >Stripe privacy policy</a
+            >
+
+            <button disabled style="color: #8f8c95" id="stripe_button">
+              register your Stripe
+            </button>
+          </label>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function convert(elem) {
+      let siblings = elem.parentNode.children;
+      if (siblings[0].type == "password") {
+        siblings[0].type = "text"; //convert to text
+        siblings[1].src = "/static/images/icons/eye_open.png"; //convert to eye_open image
+      } else {
+        siblings[0].type = "password"; //convert to password
+        siblings[1].src = "/static/images/icons/eye_close.png"; //convert to eye_close image
+      }
+    }
+
+    function getVideoTime() {
+      let fileVideo = document.getElementById("profile_video_upload");
+      const pickOne = fileVideo.files[0];
+      window.URL = window.URL || window.webkitURL;
+      const url = window.URL.createObjectURL(pickOne);
+      const audioElement = new Audio(url);
+      audioElement.addEventListener("loadedmetadata", (_event) => {
+        const duration = audioElement.duration;
+        if (duration > 120) {
+          alert("Please keep the video length within two minutes " + duration);
+          fileVideo.value = "";
+          return;
+        }
+        const size = pickOne.size / 1024 / 1000;
+        if (size > 300) {
+          alert("The size of the file is too large");
+          fileVideo.value = "";
+          return;
+        }
+      });
+    }
+
+    function validate() {
+      let pw1 = document.getElementById("new_password1").value;
+
+      let pw2 = document.getElementById("new_password2").value;
+
+      let submit = document.getElementById("profile_change_password");
+
+      let notice = document.getElementById("password_match_notification");
+
+      if (pw1 == pw2) {
+        notice.style.color = "green";
+
+        notice.innerHTML = "password matches";
+
+        submit.style.color = "white";
+
+        submit.disabled = false;
+      } else {
+        notice.style.color = "red";
+
+        notice.innerHTML = "password doesn't match";
+
+        submit.style.color = "grey";
+
+        submit.disabled = true;
+      }
+    }
+
+    function checkSelected(element) {
+      let button = document.getElementById("stripe_button");
+      if (element.checked == true) {
+        button.style.color = "white";
+        button.removeAttribute("disabled");
+      } else {
+        button.style.color = "#8f8c95";
+        button.disabled = "disabled";
+      }
+    }
+
+    function detectNum(element) {
+      if (element.value.length == 2) {
+        element.value += "/";
+      }
+    }
+  </script>
+</section>
+{% endblock %}

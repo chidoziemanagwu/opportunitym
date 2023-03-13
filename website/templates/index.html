@@ -1,0 +1,394 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+<meta name="description" content="OpportunityM is your ultimate resource for unlocking your full potential. Our platform offers a wide range of career and personal growth opportunities, from job listings to educational resources and networking events. Discover your true potential with OpportunityM today.">
+<meta name="keywords" content="hometown opportunities, opportunity international, opportunity, hometown opportunity, opportunitym.com, local job listings
+, local job postings, non-profit international, myopportunity
+, hometown jobs
+, jobs in the local area
+, local job opportunities
+, opportunity job
+, local careers
+, jobs in your area
+,local job hirings
+,international opportunities
+,find local opportunity
+,profit opportunity
+,opportunity for job
+,home opportunities
+,jobs near my home
+,opportunity resources jobs">
+<style>
+    @media (min-width: 768px) {
+        .step-1 {
+            margin-top: 4.5rem;
+        }
+        .step-2 {
+            margin-top: 5.5rem;
+        }
+        .step-3 {
+            margin-top: 6rem;
+        }
+    }
+
+    .interestedbuttons:hover{
+        cursor:pointer;
+        transform: scale(1.1);
+    }
+</style>
+<h1 hidden> Oliver McCourty: Opening Opportunity </h1>
+
+<!-- Icon Font Stylesheet----------------------------------------->
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Libraries Stylesheet----------------------------------------->
+
+<link href="lib/animate/animate.min.css" rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<!-- Customized Bootstrap Stylesheet------------------------------->
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Jquery-------------------------------------------------------->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+
+<!-- Header-------------------------------------------------------->
+
+<div class="container-fluid py-1 hero-header mb-1" style="background-color: black;">
+    <div class="container my-5 py-5">
+        <div class="text-align-center">
+            <h2 class="display-1" id="display-1">
+                opening opportunity
+                <p style="padding-top: 10px; padding-bottom: 8px; margin-top: 10px; margin-bottom: 8px;">》</p>
+                <p>equalising opportunity</p>
+            </h2>
+        </div>
+        <div class="col-md-12" style="padding-top: 3%;">
+            <div class="d-flex justify-content-center flex-column" style="padding-top: 70px;">
+                <p class="text-white text-align-center">What opportunities would you like to see more of?</p>
+                <form id="opportunity-form" class="form d-flex flex-column justify-content-center align-items-center" method="POST">
+                    {% csrf_token %}
+                    <input id="opportunity" type="text" name="opportunity" placeholder="I would like to see..." class="form-control" style="margin: 10px; max-width: 500px;" required/>
+                    <div id="opportunity_mini_form" style="display: none;">
+                        <p class="pt-4 text-white text-align-center">Fill out our 10 sec form below to stay updated when your opportunity becomes available</p>
+                        <p class="text-white text-align-center"><small>(BONUS: For the next 24 hours receive your FREE Opportunity Checklist!)</small></p>
+                        <input 
+                            id="opportunity_user_id" 
+                            type="text" 
+                            name="opportunity_user_id" 
+                            {% if user.is_authenticated %}
+                            value="{{user.id}}" 
+                            {% else %}
+                            value="-"
+                            {% endif %}
+                        hidden/>
+                        <input 
+                            id="opportunity_firstname" 
+                            type="text" 
+                            name="opportunity_firstname" 
+                            placeholder="First name" 
+                            class="form-control" 
+                            style="margin: 10px; max-width: 500px;" 
+                            {% if user.is_authenticated %}
+                            value="{{user.first_name}}" 
+                            hidden
+                            {% else %}
+                            value=""
+                            {% endif %}
+                            required
+                        />
+                        <input 
+                            id="opportunity_email" 
+                            type="email" 
+                            name="opportunity_email" 
+                            placeholder="Email" 
+                            class="form-control" 
+                            style="margin: 10px; max-width: 500px;" 
+                            {% if user.is_authenticated %}
+                            value="{{user.email}}" 
+                            hidden
+                            {% else %}
+                            value=""
+                            {% endif %}
+                            required
+                        />
+                        <select id="opportunity_region" type="text" name="opportunity_region" placeholder="Region" class="form-control" style="margin: 10px; max-width: 500px;" required>
+                            <option value="Choose" selected>Where would you like your opportunity?</option> 
+                            <option value="East of England">East of England</option>  
+                            <option value="East Midlands">East Midlands</option>
+                            <option value="Greater London">Greater London</option>
+                            <option value="North East">North East</option>
+                            <option value="North West">North West</option>
+                            <option value="Northern Ireland">Northern Ireland</option>
+                            <option value="Scotland">Scotland</option>
+                            <option value="South East England">South East England</option>
+                            <option value="South West England">South West England</option>
+                            <option value="Wales">Wales</option>
+                            <option value="West Midlands">West Midlands</option>
+                            <option value="Yorkshire and the Humber">Yorkshire and the Humber</option>
+                          </select>
+                        <input 
+                            id="opportunity_telephone" 
+                            type="tel" 
+                            name="opportunity_telephone" 
+                            placeholder="Telephone (Optional)" 
+                            class="form-control" 
+                            style="margin: 10px; max-width: 500px;" 
+                            {% if user.is_authenticated %}
+                            hidden
+                            {% else %}
+                            {% endif %}
+                        />
+                        <div class="form-check" style="color: white; width: 80%; max-width: 500px; margin: 10px">
+                            <input id="opportunity_checkbox" class="form-check-input" name="opportunity_checkbox"  type="checkbox" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Allow opportunityM to use my location for analytical purposes (We will only be collecting your current region and city)
+                            </label>
+                        </div>
+                    </div>
+                    <p class="text-white text-align-center"><small id="success2"></small></p>
+                    <input type="submit" value="Submit" class="btn" name="Opportunity-submit" style="margin: 10px; background-color: #3BE4B6;" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- speaking opportunities = equalising opportunities -->
+<!-- First Container ------------------------------------------------------>
+
+<section id="learn-more">
+    <div class="fluid-container" style="padding-left: 40px; padding-right: 60px;">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-lg-5 order-1">
+                <img alt="home1 img" style=" border-radius: 15%; width: 70%; height: auto; max-width: 450px;" src="{% static 'images/home1.png' %}" class="img-fluid rounded-start" >
+            </div>
+            <div class="col-lg-5 pt-1 pt-lg-0 order-2 order-lg-2 content">
+                <br>
+                <h4 style="padding-bottom: 15px;"><strong>Yet there still isn't enough opportunity...</strong></h4>
+                <p>
+                    Equal opportunity is the cornerstone of a healthy society, so we made the decision to start tackling this issue since there are so few who are available to the public and no one to support them.
+                </p>
+                <p>
+                    opportunityM does three things really REALLY well:  
+                </p>
+                <ul style="padding-bottom: 10px">
+                    <li>Identifying opportunities most in demand</li>
+                    <li>Categorising opportunities, treating it like it's a science</li>
+                    <li>Consulting forward-looking companies developing meaningful partnerships</li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- Second Container ------------------------------------------------------>
+
+<section id="for-speakers">
+    <div class="fluid-container" style="padding-left: 65px; padding-right: 60px;">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-lg-5 order-2">
+                <img alt="opportunity portfolio img" style="width: 70%; height: 70%; max-width: 450px; max-height: 450px; object-fit: cover;" src="{% static 'images/OpportunityPortfolio.png' %}" class="img-fluid rounded-end" alt="">
+            </div>
+            <div class="col-lg-5 pt-0 pt-lg-0 order-lg-1 content">
+                <br>
+                <h4 style="padding-bottom: 15px;"><strong>Ways to work with us</strong></h4>
+                <p>
+                    <strong style="font-size: 1.2rem">Opportunity Portfolio</strong> is our NEWEST product developed following years of extensive research
+                </p>
+                <p>
+                    Leaders of companies, leaders of families: everyone needs opportunities yet...
+                </p>
+                <p>
+                    Are we getting enough? <br>Are we getting the right opportunities? <br>Are opportunities being shared equally?
+                </p>
+                <p style="padding-bottom: 10px">
+                    Express interest in <strong style="font-size: 1.2rem">Opportunity Portfolio</strong> and our SUPER team will reach out ASAP
+                </p>
+                <p><small id="opp_portfolio_form_message"></small></p>
+                <!-- <a href="{% url 'register' %}" class="btn btn btn-outline-dark me-3" style="text-decoration: none; font-size: 15px; font-style: normal; padding: 10px 20px">REGISTER TODAY</a> -->
+                <img src="{% static 'images/ImInterestedButton1.png' %}" alt="interested button img" width="150" class="interestedbuttons my-3"  onclick="showForm1()"/>
+                <div id="formElement1" style="display: none;">
+                    <form class="form" id="opp_portfolio_form" method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input type="text" id="opportunity_portfolio_name" name="opportunity_portfolio_name" placeholder="Name" class="form-control mr-1 mb-1" required/>
+                            <input type="email" id="opportunity_portfolio_email" name="opportunity_portfolio_email" placeholder="Email" class="form-control mr-1 mb-1" required/>
+                        </div>
+                        <input type="text" id="opportunity_portfolio_company" name="opportunity_portfolio_company" placeholder="Company" class="form-control mr-1 mb-1" />
+                        <input type="submit" value="Submit" class="btn btn-primary mr-1 mb-1 mt-2" name="Opportunity-submit" />
+                    </form>
+                </div>
+                <p>{{ message_op }}</p>               
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Third Container ------------------------------------------------------>
+
+<section id="for-organisers">
+    <div class="fluid-container" style="padding-left: 65px; padding-right: 40px; padding-bottom: 20px">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-lg-5 order-1">
+                <img style="width: 80%; height: 80%; max-width: 500px; max-height: 500px; object-fit: cover;" src="{% static 'images/OpportunityVerified.png' %}" class="img-fluid rounded-start" alt="opportunity verified img">
+            </div>
+            <div class="col-lg-5 pt-0 pt-lg-0 order-lg-2 content">
+                <br>
+                <h4 style="padding-bottom: 15px;"><strong>BONUS</strong></h4>
+                <p>
+                    Every Opportunity Portfolio comes with a FREE optional product
+                </p>
+                <p>
+                    <strong style="font-size: 1.2rem">Opportunity Verified</strong> ensures opportunities presented to people are trustworthy
+                </p>
+                <p>
+                    We have a dedicated team of opportunists ready to uphold opportunity standards to support you
+                </p>
+                <p>
+                    Once assessed you'll recieve a status report alongside recommended next steps
+                </p>
+                <p style="padding-bottom: 10px">
+                    Express your interest in <strong style="font-size: 1.2rem">Opportunity Verified</strong> below!
+                </p>
+                <p><small id="opp_verified_form_message"></small></p>
+                <!-- <a href="{% url 'register' %}" class="btn btn btn-outline-dark me-3" style="text-decoration: none; font-size: 15px; font-style: normal; padding: 10px 20px">REGISTER TODAY</a> -->
+                <img src="{% static 'images/ImInterestedButton2.png' %}" alt="i am interested button img" width="150" class="interestedbuttons my-3"  onclick="showForm2()"/>
+                <div id="formElement2" style="display: none;">
+                    <form class="form" id="opp_verified_form" method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input type="text" id="opportunity_verified_name" name="opportunity_verified_name" placeholder="Name" class="form-control mr-1 mb-1" required/>
+                            <input type="email" id="opportunity_verified_email" name="opportunity_verified_email" placeholder="Email" class="form-control mr-1 mb-1" required/>
+                        </div>
+                        <input type="text" id="opportunity_verified_company" name="opportunity_verified_company" placeholder="Company" class="form-control mr-1 mb-1" />
+                        <input type="submit" value="Submit" class="btn btn-primary mr-1 mb-1 mt-2" name="Opportunity-submit" />
+                    </form>
+                </div>
+                <p>{{ message_ov }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    ScrollReveal().reveal('#learn-more', {
+        duration: 1200,
+        distance: "-50px",
+        mobile: false
+    });
+    ScrollReveal().reveal('#cta6', {
+        duration: 1200,
+        distance: "-50px",
+        mobile: false
+    });
+    ScrollReveal().reveal('#for-speakers', {
+        duration: 1200,
+        distance: "-50px",
+        mobile: false
+    });
+    ScrollReveal().reveal('#for-organisers', {
+        duration: 1200,
+        distance: "-50px",
+        mobile: false
+    });
+
+    function showForm1() {
+        var x = document.getElementById('formElement1');
+        if(x.style.display === 'none'){
+            x.style.display = 'block';
+        }
+        else{
+            x.style.display = 'none';
+        }
+    }
+
+    function showForm2() {
+        var y = document.getElementById('formElement2');
+        if(y.style.display === 'none'){
+            y.style.display = 'block';
+        }
+        else{
+            y.style.display = 'none';
+        }
+    }
+
+    document.querySelector('#opportunity').addEventListener('input', (event) => {
+        var z = document.getElementById('opportunity_mini_form');
+        z.style.display = 'flex';
+        z.style.flexDirection = 'column';
+        z.style.justifyContent = 'center';
+        z.style.alignItems = 'center';
+
+        if (event.currentTarget.value.length == 0){
+            z.style.display = 'none';
+        }
+    });
+
+    $(document).on('submit', '#opportunity-form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'add_opportunity',
+            data: {
+                opportunity: $('#opportunity').val(),
+                opportunity_user_id: $('#opportunity_user_id').val(),
+                opportunity_firstname: $('#opportunity_firstname').val(),
+                opportunity_email: $('#opportunity_email').val(),
+                opportunity_region: $('#opportunity_region').val(),
+                opportunity_telephone: $('#opportunity_telephone').val(),
+                opportunity_checkbox: $('#opportunity_checkbox').is(":checked"),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('#success2').html(data)
+            }
+        })
+    });
+
+    $(document).on('submit', '#opp_portfolio_form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'submit_interest_for_opp_portfolio',
+            data: {
+                opportunity_portfolio_name: $('#opportunity_portfolio_name').val(),
+                opportunity_portfolio_email: $('#opportunity_portfolio_email').val(),
+                opportunity_portfolio_company: $('#opportunity_portfolio_company').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('#opp_portfolio_form_message').html(data)
+            }
+        })
+    });
+
+    $(document).on('submit', '#opp_verified_form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'submit_interest_for_opp_verified',
+            data: {
+                opportunity_verified_name: $('#opportunity_verified_name').val(),
+                opportunity_verified_email: $('#opportunity_verified_email').val(),
+                opportunity_verified_company: $('#opportunity_verified_company').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('#opp_verified_form_message').html(data)
+            }
+        })
+    });
+
+</script>
+
+</section>
+{% endblock %}

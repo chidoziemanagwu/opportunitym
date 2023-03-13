@@ -1,0 +1,206 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<style>
+  /*Show/Hide Password button*/
+    .toggle {
+      background: url({% static 'images/icons/eye.png' %});
+      background-size:cover;
+      float:right;
+      margin-right:1em;
+      transform: translateY(-160%);
+      width:16px;
+      height:16px;
+      cursor: pointer;
+    }
+
+</style>
+
+<title>sign up</title>
+<section style="background-color: #eee">  
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="sign_up_dev">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                      sign up
+                    </p>
+
+                    <form class="mx-1 mx-md-4">
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <div class="form-outline flex-fill mb-0">
+                          <input hidden 
+                          type="text"
+                          name="username"
+                          value = "username"
+                        />
+                        </div>
+                      </div>
+             
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            {{form.first_name}}
+                            <label class="form-label" for="form3Example1c" hidden="true"
+                              >First name</label
+                            >
+                            {{form.first_name.error}}
+                          </div>
+                        </div>
+
+                          <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              {{form.last_name}}
+                              <label class="form-label" for="form3Example1c" hidden="true"
+                                >last name</label
+                              >
+                              {{form.last_name.error}}
+                            </div>
+                          </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          {{form.email}}
+                          <label class="form-label" for="form3Example3c" hidden="true"
+                            >your email</label
+                          >
+                          {{form.email.error}}
+                        </div>
+                      </div>
+                      <div class="d-flex flex-row align-items-center mb-4 password-input">
+                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          {{form.password1}}
+                          
+                          <!-- eye button for show/hide password-->
+                          <div class="toggle" onclick="show_pwd1()">
+                          </div>
+                          <!-- end eye button -->
+
+                          <label class="form-label" for="form3Example4c" hidden="true"
+                            >password</label
+                          >
+                        </div>
+                      </div>
+                      <p class="Length-error" hidden="true">
+                        • Your password is too short.
+                      </p>
+                      <p class="Uppercase-error" hidden="true">
+                        • Your password need at least one uppercase letter.
+                      </p>
+                      <p class="Lowercase-error" hidden="true">
+                        • Your password need at least one lowercase letter.
+                      </p>
+                      <p class="Number-error" hidden="true">
+                        • Your password need at least one number.
+                      </p>
+                      <p class="SpecialChar-error" hidden="true">
+                        • Your password need at least one special character.
+                      </p>
+
+                      <div class="d-flex flex-row align-items-center mb-4 password-input">
+                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          {{form.password2}}
+                          
+                          <!-- eye button for show/hide password-->  
+                          <div class="toggle" onclick="show_pwd2()">
+                          </div>
+                          <!-- end eye button -->
+                          <label class="form-label" for="form3Example4c" hidden="true">confirm password</label>
+                        </div>
+                      </div>
+                      <p class="Matching-error" hidden="true">
+                        • your password are not matching.
+                      </p>
+
+                      <!-- Show/Hide password script -->
+                      <script>
+                        function show_pwd1() {
+                          var x = document.querySelector(".Password1");
+                          if (x.type === "password") {
+                            x.type = "text";
+                          } else {
+                            x.type = "password";
+                          }
+                        }
+
+                        function show_pwd2() {
+                          var x = document.querySelector(".Password2");
+                          if (x.type === "password") {
+                            x.type = "text";
+                          } else {
+                            x.type = "password";
+                          }
+                        }
+                      </script>
+                      <!--- End show/hide password -->
+                      
+                      <div class="form-check d-flex justify-content-center mb-5">
+                        <div>
+                          <input
+                          id="register_checkbox"
+                          class="form-check-input me-2 register_checkbox"
+                          type="checkbox"
+                          value=""
+                          id="form2Example3c"
+                         style="padding:1em;"/> 
+                        </div>
+                        <div class="pl-5">
+                          <label class="form-check-label" for="form2Example3">
+                            I agree all statements in
+                            <a href="{% url 'terms_and_conditions' %}" style="text-decoration: none;">Terms and conditions</a>, <a href="{% url 'privacy_policy' %}" style="text-decoration: none;">Privacy policy</a> and <a href="https://stripe.com/gb/legal/connect-account" style="text-decoration: none;">Stripe Connected Account Agreement</a>.
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <button
+                          id="register_btn"
+                          type="button submit "
+                          value="Register"
+                          class="btn btn-danger disabled"
+                        >
+                          REGISTER
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  {% comment %} <div
+                    class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2"
+                  >
+                    <img
+                      src="{% static 'images/logo.png' %}"
+                      class="img-fluid"
+                      alt="logo"
+                    />
+                  </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+<script src="{% static 'JS/password_check.js' %}"></script>
+<script>
+  $("#register_checkbox").change(function () {
+    if ($(this).is(":checked")) {
+      $("#register_btn").removeClass("disabled");
+    } else {
+      $("#register_btn").addClass("disabled");
+    }
+  });
+</script>
+
+{% endblock %}

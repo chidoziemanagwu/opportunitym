@@ -1,0 +1,18 @@
+{% extends 'main.html' %} {%block content %}{% load static %}
+
+<title>{{title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<section id="register">
+  <div class="main-container">
+    <form action="" method="POST" id="registration-form">
+      {% csrf_token %}
+      <input type="text" name="full_name" placeholder="Full Name">
+      <input type="text" name="email" placeholder="Email">
+      <input type="password" name="password" placeholder="Password">
+      <input type="submit" value="Submit" class="wide-input">
+    </form>
+  </div>
+</section>
+
+{% endblock %}

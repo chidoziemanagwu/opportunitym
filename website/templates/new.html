@@ -1,0 +1,245 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<title>What's New</title>
+
+<style>
+    /* #benefit-lists {
+        column-count: 2;
+        column-gap: 50px;
+    } */
+
+    #products{
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .product-img{
+        width: 300px;
+        height: 300px;
+    }
+
+    .product-logo{
+        width: 250px
+    }
+
+    .middle-element{
+        padding-top: 80px;
+        padding-bottom: 60px;
+        padding-left: auto; 
+        padding-right: auto; 
+    }
+
+    .interestedbuttons:hover{
+        cursor:pointer;
+        transform: scale(1.1);
+    }
+
+    #verified-benefits li{
+        margin: 0;
+        padding: 10px 0 10px 40px;
+        list-style: none;
+        background-image: url("https://olivermccourty-static-bucket.s3.eu-west-2.amazonaws.com/static/images/bulletpoint2.png");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 20px;
+    }
+
+    #portfolio-benfits li{
+        margin: 0;
+        padding: 10px 0 10px 40px;
+        list-style: none;
+        background-image: url("https://olivermccourty-static-bucket.s3.eu-west-2.amazonaws.com/static/images/bulletpoint1.png");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 20px;
+    }
+
+    #background{
+        margin-left: 240px; 
+        margin-right: 240px; 
+    }
+
+    @media screen and (max-width: 1020px) {
+        /* #benefit-lists{
+            column-count: 1;
+        } */
+        #products{
+            flex-direction: column;
+        }
+
+        #WYNTimg{
+            display: none;
+        }
+
+        .middle-element{
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .product{
+            width: 100%;
+        }
+
+        .product-img{
+            width: 180px;
+            height: 180px;
+        }
+
+        .product-logo{
+            width: 140px
+        }
+    }
+
+    @media screen and (max-width: 1350px) {
+        #background{
+            margin-left: 20px; 
+            margin-right: 20px; 
+        }
+    }
+</style>
+
+<!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+</svg> -->
+
+<section id="new">
+    <div id="background" style="background-image: linear-gradient(to right, #FFEBEF, #FFEBEF, #eeeefc, #eeeefc); padding-top: 30px; border-radius: 30px;">
+        <div class="container-fluid d-flex flex-column align-items-center" style="padding-left: 65px; padding-right: 60px;">
+            <div id="products" style="border-radius: 30px;">
+                <div class="product mx-3 px-3 d-flex flex-column align-items-center justify-content-start">
+                    <img src="{% static 'images/OpportunityPortfolio.png' %}" class="product-img" style="object-fit: cover;" />
+                    <img src="{% static 'images/OpportunityPortfolioLogo2.png' %}" class="product-logo" style="object-fit: contain; width: 250px; height: 80px" />
+                    <h5 class="m-1 text-center" style="color: #EB0040;">RECOMMENDED</h5>
+                    <p class="text-secondary text-center" style="font-size: 12px; visibility: hidden">Recommended</p>
+                    <!-- <a href="{% url 'register' %}" class="btn btn btn-outline-dark me-3" style="text-decoration: none; font-size: 15px; font-style: normal; padding: 10px 20px">REGISTER TODAY</a> -->
+                    <div>
+                        <!-- <a href="{% url 'register' %}" class="btn btn btn-outline-dark me-3" style="text-decoration: none; font-size: 15px; font-style: normal; padding: 10px 20px">REGISTER TODAY</a> -->
+                        <ul id="portfolio-benfits" class="benefit-lists">
+                            <li>Free Delivery</li>
+                            <li>Unlimited Opportunity Checkups</li>
+                            <li>Infinite minutes with Opportunists</li>
+                            <li>Become the home of meaningful opportunity</li>
+                            <li>Receive your bonus Diversity Report included at no extra cost</li>
+                            <li>Obtain your Opportunity Portfolio</li>
+                            <li>Save money on recruitment</li>
+                            <li>Increase impact</li>
+                            <li>Empower your people and watch them develop</li>
+                            <li>Engage your teams with a happiness helper</li>
+                        </ul>
+                    </div>
+                    <img src="{% static 'images/ImInterestedButton1.png' %}" alt="" width="150" class="interestedbuttons mb-4"  onclick="showForm1()"/>
+                    <div id="formElement1" style="display: none;">
+                        <form class="form" id="opp_portfolio_form" method="POST">
+                            <p><small id="opp_portfolio_form_message"></small></p>
+                            {% csrf_token %}
+                            <input type="text" id="opportunity_portfolio_name" name="opportunity_portfolio_name" placeholder="First name" class="form-control mb-1" required/>
+                            <input type="email" id="opportunity_portfolio_email" name="opportunity_portfolio_email" placeholder="Email" class="form-control mb-1" required/>
+                            <input type="text" id="opportunity_portfolio_company" name="opportunity_portfolio_company" placeholder="Company (optional)" class="form-control mb-3" />
+                            <input type="submit" value="Submit" class="btn btn-primary form-control" name="Opportunity-submit" />
+                        </form>
+                    </div>
+                    <p>{{ message_op }}</p>
+                </div>
+                <div class="product mx-3 px-3 d-flex flex-column align-items-center justify-content-center">
+                    <h1 class="middle-element display-1 text-secondary">+</h1>
+                    <img id="WYNTimg" class="middle-element" src="{% static 'images/WYNTimg.png' %}" width="200" alt=""/>
+                </div>
+                <div class="product mx-3 px-3 d-flex flex-column align-items-center justify-content-start">
+                    <img src="{% static 'images/OpportunityVerified.png' %}" class="product-img" style="object-fit: cover;" />
+                    <img src="{% static 'images/OpportunityVerifiedLogo2.png' %}" style="object-fit: contain; width: 250px; height: 80px" />
+                    <h5 class="p-1 m-1 text-center" style="color: #2f2adc">FREE</h5>
+                    <p class="text-secondary text-center" style="font-size: 12px">Optional</p>
+                    <!-- <a href="{% url 'register' %}" class="btn btn btn-outline-dark me-3" style="text-decoration: none; font-size: 15px; font-style: normal; padding: 10px 20px">REGISTER TODAY</a> -->
+                    <div style="width: 100%">
+                        <!-- <a href="{% url 'register' %}" class="btn btn btn-outline-dark me-3" style="text-decoration: none; font-size: 15px; font-style: normal; padding: 10px 20px">REGISTER TODAY</a> -->
+                        <ul id="verified-benefits" class="benefit-lists">
+                            <li>Free / no cost</li>
+                            <li>Optional / no obligation</li>
+                            <li>Boost your status</li>
+                            <li>Become Opportunity Verified</li>
+                        </ul>
+                    </div>
+                    <img src="{% static 'images/ImInterestedButton2.png' %}" alt="" width="150" class="interestedbuttons mb-4"  onclick="showForm2()"/>
+                    <div id="formElement2" style="display: none;">
+                        <form class="form" id="opp_verified_form" method="POST">
+                            <p><small id="opp_verified_form_message"></small></p>
+                            {% csrf_token %}
+                            <input type="text" id="opportunity_verified_name" name="opportunity_verified_name" placeholder="First name" class="form-control mb-1" required/>
+                            <input type="email" id="opportunity_verified_email" name="opportunity_verified_email" placeholder="Email" class="form-control mb-1" required/>
+                            <input type="text" id="opportunity_verified_company" name="opportunity_verified_company" placeholder="Company (optional)" class="form-control mb-3" />
+                            <input type="submit" value="Submit" class="btn btn-primary form-control" name="Opportunity-submit" />
+                        </form>
+                    </div>
+                    <p>{{ message_ov }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    ScrollReveal().reveal('.display-3', { duration: 1200, distance: "-50px", mobile: false });
+    ScrollReveal().reveal('#section-2-title', { duration: 1200, distance: "-50px", mobile: false });
+    ScrollReveal().reveal('.product', { duration: 1200, distance: "-50px", mobile: false });
+    ScrollReveal().reveal('#WYNTimg', { duration: 1200, distance: "-50px", mobile: false });
+    ScrollReveal().reveal('.benefit-lists', { duration: 1200, distance: "-50px", mobile: false });
+
+    function showForm1() {
+        var x = document.getElementById('formElement1');
+        if(x.style.display === 'none'){
+            x.style.display = 'block';
+        }
+        else{
+            x.style.display = 'none';
+        }
+    }
+
+    function showForm2() {
+        var y = document.getElementById('formElement2');
+        if(y.style.display === 'none'){
+            y.style.display = 'block';
+        }
+        else{
+            y.style.display = 'none';
+        }
+    }
+
+    $(document).on('submit', '#opp_portfolio_form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'submit_interest_for_opp_portfolio',
+            data: {
+                opportunity_portfolio_name: $('#opportunity_portfolio_name').val(),
+                opportunity_portfolio_email: $('#opportunity_portfolio_email').val(),
+                opportunity_portfolio_company: $('#opportunity_portfolio_company').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('#opp_portfolio_form_message').html(data)
+            }
+        })
+    });
+
+    $(document).on('submit', '#opp_verified_form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'submit_interest_for_opp_verified',
+            data: {
+                opportunity_verified_name: $('#opportunity_verified_name').val(),
+                opportunity_verified_email: $('#opportunity_verified_email').val(),
+                opportunity_verified_company: $('#opportunity_verified_company').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                $('#opp_verified_form_message').html(data)
+            }
+        })
+    });
+</script>
+{% endblock %}

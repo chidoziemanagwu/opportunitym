@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<title>Coming Soon</title>
+
+<style>
+
+    .product{
+        width: 60%;
+    }
+
+    @media screen and (max-width: 960px) {
+        .product{
+            width: 100%;
+        }
+    }
+
+</style>
+
+<section id="coming_soon" style="padding-bottom: 0;">
+    <div class="container-fluid d-flex flex-column align-items-center">
+        <h1 class="display-4">Coming soon...</h1>
+    </div>
+    <div class="container-fluid d-flex flex-column align-items-center" style="padding: 40px; margin-top: 20px; margin-bottom: 20px">
+        <div class="product row d-flex align-items-center" style="margin: 10px; padding: 30px; border-style: solid; border-width: 10px; border-color: #feeb4a; border-radius: 30px;">
+            <div class="col-md-4 d-flex justify-content-center">
+                <img src="{% static 'images/OpportunityDictionary.PNG' %}" width="250" height="250" style="object-fit: cover;" />
+            </div>
+            <div class="productdesc col-md-8" style="padding: 30px; padding-top: 60px; padding-bottom: 60px; background-color: #fffdeb; border-radius: 30px">
+                <h4>Opportunity Dictionary</h4>
+                <p class="text-secondary">£99.99</p>
+                <p></p>
+                <a href="https://buy.stripe.com/4gwcPW1vybJ85BCeUV"><button class="btn btn-md" style="background-color: #feeb4a; color: black; border-color: #feeb4a;">Pre-order</button></a>
+            </div>
+        </div>
+        <div class="product row d-flex align-items-center" style="margin: 10px; padding: 30px; border-style: solid; border-width: 10px; border-color: black; border-radius: 30px;">
+            <div class="col-md-4 d-flex justify-content-center">
+                <img src="{% static 'images/OpportunitySecrets.png' %}" width="250" height="250" style="object-fit: cover;" />
+            </div>
+            <div class="col-md-8" style="padding: 30px; padding-top: 60px; padding-bottom: 60px; background-color: #eaeaea; border-radius: 30px">
+                <h4>Opportunity Secrets</h4>
+                <p class="text-secondary">£29.99</p>
+                <p></p>
+                <a href="https://buy.stripe.com/14k7vC4HK8wW0hi4gg"><button class="btn btn-md" style="background-color: black; color: white; border-color: black;">Pre-order</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="background-color: black; color: white; padding: 30px;">
+        <div class="row">
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-sm-4 d-flex align-items-center justify-content-center">
+                    <h4 class="m-3">Have any questions? </h4>
+                </div>
+                <div class="col-sm-8 d-flex align-items-center justify-content-center">
+                    <input name="question" class="m-2" type="text" placeholder="Ask us anything!" style="border-radius: 5px; padding: 5px"/>
+                    <button name="Submit_question" class="btn btn-light">Submit</button>
+                </div>
+            </form>
+            <div class="row">
+                <p>{{ message }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+</script>
+{% endblock %}

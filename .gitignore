@@ -1,0 +1,27 @@
+.DS_Store
+/venv/
+*/venv/*
+db.sqlite3
+/__pycache__/
+.vscode
+__pycache__/
+**/__pycache__/
+*.pyc
+media/
+migrations/
+.env
+.venv
+.idea/
+website/users/views_20220815.py
+website/website/settings_local.py
+website/static/images/icons/email_insta_icon.png
+website/static/images/icons/email_likedin_icon.png
+website/website/settings_amazon.py
+website/website/settings.py
+GDAL-3.5.1.tar.gz
+GDAL-3.5.1
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<title>oops</title>
+
+<section class="text-lowercase" style="background-color: #eee">
+  <form method="post">
+    {% csrf_token %} {% if form.errors %}
+    <!--get the error-->
+    {% for field in form %} {% for error in field.errors %}
+    <!--pop up the error message -->
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    <!--end for--> 
+    {% endfor %}
+    <!--end for-->
+    {% endfor %}
+    <!--end if-->
+    {% endif %}
+
+    <div class="sign_up_dev">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                    
+                    <h1 class="text-center" style="color: #000;"> Oops!                   
+                    </h1>
+                    <p class="text-center" style="color: #000;">{{msg}}</p>
+                    <form>
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <a href="{% url 'request-new-link-from-email' %}" class="btn btn-outline-info">Resend email</a>
+                        </div>
+                    </form>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+
+{% endblock %}

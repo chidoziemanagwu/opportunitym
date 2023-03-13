@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {%block content %}{% load static %}
+<title>{{title}}</title>
+
+<div style="padding-bottom: 20px; padding-top: 100px;">
+    <form method="post">
+        {% csrf_token %}
+        <div class="col d-flex justify-content-center">
+            <div class="card w-75">
+                <div class="card-header">
+                    <h1 class="display-4"><strong>{{ user.username }}'s Post</strong></h1>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-primary" name='Add'>Add New Post</button>
+                </div>
+                {% for post in post_list %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+                        <p class="card-text">Published on {{ post.post_date }}</p>
+                        {% if post.mailed == False %}
+                        <button type="submit" class="btn btn-primary mx-1" name='Mail' value='{{ post.id }}'>Mail to subscribers</button>
+                        {% else %}
+                        <div class="float-left mx-1 font-italic" disabled>This post has already been mailed to subscribers</div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-danger float-right mx-1" name='Delete' value='{{ post.slug }}'>Delete</button>
+                        <button type="submit" class="btn btn-primary float-right mx-1" name='Edit' value='{{ post.slug }}'>Edit</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
